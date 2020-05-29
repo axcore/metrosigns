@@ -40,11 +40,11 @@ function metrosigns.writer.checksupplies(pos)
     end
 
     local redcart_good = redcart:to_table().name == "metrosigns:cartridge_red"
-        and redcart:to_table().wear <= metrosigns.writer.cartridge_max
+        and redcart:to_table().wear < metrosigns.writer.cartridge_max
     local greencart_good = greencart:to_table().name == "metrosigns:cartridge_green"
-        and greencart:to_table().wear <= metrosigns.writer.cartridge_max
+        and greencart:to_table().wear < metrosigns.writer.cartridge_max
     local bluecart_good = bluecart:to_table().name == "metrosigns:cartridge_blue"
-        and bluecart:to_table().wear <= metrosigns.writer.cartridge_max
+        and bluecart:to_table().wear < metrosigns.writer.cartridge_max
     local plastic_good = plastic:to_table().name == "basic_materials:plastic_sheet"
     local good = redcart_good and greencart_good and bluecart_good and plastic_good
 
@@ -116,7 +116,7 @@ function metrosigns.writer.populateoutput(pos)
         "label[0,2;Blue\nCartridge]" ..
         "list[current_name;bluecart;1.5,2;1,1;]" ..
         -- Plastic
-        "label[0,3;Plastic\nSheeting]" ..
+        "label[0,3;Plastic\nSheet]" ..
         "list[current_name;plastic;1.5,3;1,1;]" ..
         -- Sign categories
         "label[0,5;Sign\nCategory]" ..
@@ -156,8 +156,6 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
     local meta = minetest.get_meta(pos)
 
     if fields.category then
-
-        minetest.log(fields.category)
 
         -- User has activated the dropdown box
         if metrosigns.writer.signtypes[fields.category] ~= nil then
@@ -349,7 +347,7 @@ end
 ---------------------------------------------------------------------------------------------------
 
 minetest.register_node("metrosigns:sign_writer", {
-    description = "Sign Writer",
+    description = "Sign Writer Machine",
     tiles = {
         "metrosigns_writer_top.png",
         "metrosigns_writer_side.png",
@@ -359,11 +357,9 @@ minetest.register_node("metrosigns:sign_writer", {
         "metrosigns_writer_front.png",
     },
     inventory_image = "metrosigns_writer_front.png",
-    groups = {snappy = 3},
+    groups = {cracky = 2},
     paramtype = "light",
     paramtype2 = "facedir",
---  Commented out because I don't know how to fix the error
---  sound = default.node_sound_wood_defaults(),
     walkable = true,
     -- Callbacks
     allow_metadata_inventory_move = metrosigns.writer.allow_metadata_inventory_move,
@@ -374,3 +370,11 @@ minetest.register_node("metrosigns:sign_writer", {
     on_metadata_inventory_take = metrosigns.writer.on_metadata_inventory_take,
     on_receive_fields = metrosigns.writer.on_receive_fields,
 })
+
+if HAVE_DEFAULT_FLAG then
+
+    minetest.override_item(
+        "metrosigns:sign_writer", { sounds = default.node_sound_stone_defaults() }
+    )
+
+end

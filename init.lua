@@ -77,9 +77,9 @@ metrosigns.writer.cartridge_max = 60000
 metrosigns.writer.cartridge_min = 1000
 -- Number of units used for printing various kinds of sign
 metrosigns.writer.box_units = 30
-metrosigns.writer.sign_units = 5
-metrosigns.writer.map_units = 10
-metrosigns.writer.text_units = 10
+metrosigns.writer.sign_units = 6
+metrosigns.writer.map_units = 12
+metrosigns.writer.text_units = 12
 
 -- Used in material copied from advtrains_subwayblocks and trainblocks
 box_groups = {cracky = 3}
@@ -113,25 +113,20 @@ metrosigns.writer.signcounts = {}
 -- Load settings
 ---------------------------------------------------------------------------------------------------
 
--- All settings temporarily enabled, because I can't get settingtypes.txt to behave as intended
---metrosigns.create_all_flag = minetest.setting_get("metrosigns_create_all") or false
-metrosigns.create_all_flag = minetest.setting_get("metrosigns_create_all") or true
+-- Load settings from Minetest's main menu
+metrosigns.create_all_flag = minetest.setting_get("metrosigns_create_all") or false
 
 metrosigns.create_subwayblocks_flag = minetest.setting_get("metrosigns_create_subwayblocks")
 or false
 metrosigns.create_trainblocks_flag = minetest.setting_get("metrosigns_create_trainblocks") or false
 
 metrosigns.create_ext_line_flag = minetest.setting_get("metrosigns_create_ext_line") or true
---metrosigns.ext_line_min = minetest.setting_get("metrosigns_ext_line_min") or 11
---metrosigns.ext_line_max = minetest.setting_get("metrosigns_ext_line_min") or 20
-metrosigns.ext_line_min = minetest.setting_get("metrosigns_ext_line_min") or 1
-metrosigns.ext_line_max = minetest.setting_get("metrosigns_ext_line_min") or 99
+metrosigns.ext_line_min = minetest.setting_get("metrosigns_ext_line_min") or 11
+metrosigns.ext_line_max = minetest.setting_get("metrosigns_ext_line_min") or 20
 
 metrosigns.create_ext_platform_flag = minetest.setting_get("metrosigns_create_ext_platform") or true
---metrosigns.ext_platform_min = minetest.setting_get("metrosigns_ext_platform_min") or 11
---metrosigns.ext_platform_max = minetest.setting_get("metrosigns_ext_platform_min") or 20
-metrosigns.ext_platform_min = minetest.setting_get("metrosigns_ext_platform_min") or 1
-metrosigns.ext_platform_max = minetest.setting_get("metrosigns_ext_platform_min") or 99
+metrosigns.ext_platform_min = minetest.setting_get("metrosigns_ext_platform_min") or 11
+metrosigns.ext_platform_max = minetest.setting_get("metrosigns_ext_platform_min") or 20
 
 metrosigns.create_text_flag = minetest.setting_get("metrosigns_create_text") or true
 
@@ -140,7 +135,7 @@ metrosigns.create_bangkok_flag = minetest.setting_get("metrosigns_create_bangkok
 metrosigns.create_berlin_flag = minetest.setting_get("metrosigns_create_berlin") or false
 metrosigns.create_bucharest_flag = minetest.setting_get("metrosigns_create_bucharest") or false
 metrosigns.create_budapest_flag = minetest.setting_get("metrosigns_create_budapest") or false
-metrosigns.create_glasgow_flag = minetest.setting_get("metrosigns_create_glasgow")or false
+metrosigns.create_glasgow_flag = minetest.setting_get("metrosigns_create_glasgow") or false
 metrosigns.create_hcmc_flag = minetest.setting_get("metrosigns_create_hcmc") or false
 metrosigns.create_london_flag = minetest.setting_get("metrosigns_create_london") or true
 metrosigns.create_luton_flag = minetest.setting_get("metrosigns_create_luton") or false
@@ -155,6 +150,9 @@ metrosigns.create_taipei_flag = minetest.setting_get("metrosigns_create_taipei")
 metrosigns.create_tokyo_flag = minetest.setting_get("metrosigns_create_tokyo") or false
 metrosigns.create_toronto_flag = minetest.setting_get("metrosigns_create_toronto") or false
 metrosigns.create_vienna_flag = minetest.setting_get("metrosigns_create_vienna") or false
+
+-- Override one or more of these settings by uncommenting the lines in this file
+dofile(metrosigns.path_mod.."/settings.lua")
 
 ---------------------------------------------------------------------------------------------------
 -- General functions

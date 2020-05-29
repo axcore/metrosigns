@@ -7,38 +7,38 @@
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create all items, regardless of the value of other flag settings
-metrosigns_create_all (Enable to create all items. true/false) bool false
+metrosigns_create_all (Enable to create all items) bool false
 
 # -------------------------------------------------------------------------------------------------
 # Settings for items borrowed from other mods
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create items from advtrains_subwayblocks. Ignored if that module has been loaded
-metrosigns_create_subwayblocks (Enable to create all items. true/false) bool false
+metrosigns_create_subwayblocks (Enable to create all subwayblocks items) bool false
 # If enabled, create items from trainblocks. Ignored if that module has been loaded
-metrosigns_create_trainblocks (Enable to create all items. true/false) bool false
+metrosigns_create_trainblocks (Enable to create all trainblocks items) bool false
 
 # -------------------------------------------------------------------------------------------------
 # Extended line signs
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create extended line signs (in the range 00-99)
-metrosigns_create_ext_line (Enable to create extended line signs. true/false) bool true
+metrosigns_create_ext_line (Enable to create extended line signs, range) bool true
 # If the flag above is enabled, the range of signs to create: minimum and maxium values (must be
-#   integers in the range 0-99. If values are invalid, no extended line signs are created)
-metrosigns_ext_line_min (Lowest extended line sign. int) int 11
-metrosigns_ext_line_max (Highest extended line sign. int) int 20
+#   integers in the range 1-99. If values are invalid, no extended line signs are created)
+metrosigns_ext_line_min (Lowest extended line sign, 1-99) int 11
+metrosigns_ext_line_max (Highest extended line sign, 1-99) int 20
 
 # -------------------------------------------------------------------------------------------------
 # Extended platform signs
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create extended platform signs (in the range 00-99)
-metrosigns_create_ext_platform (Enable to create extended platform signs. true/false) bool true
+metrosigns_create_ext_platform (Enable to create extended platform signs) bool true
 # If the flag above is enabled, the range of signs to create: minimum and maxium values (must be
-#   integers in the range 0-99. If values are invalid, no extended platform signs are created)
-metrosigns_ext_platform_min (Lowest extended platform sign. int) int 11
-metrosigns_ext_platform_max (Highest extended platform sign. int) int 20
+#   integers in the range 1-99. If values are invalid, no extended platform signs are created)
+metrosigns_ext_platform_min (Lowest extended platform sign, 1-99) int 11
+metrosigns_ext_platform_max (Highest extended platform sign, 1-99) int 20
 
 # -------------------------------------------------------------------------------------------------
 # Map text signs
@@ -46,49 +46,49 @@ metrosigns_ext_platform_max (Highest extended platform sign. int) int 20
 
 # If enabled, create signs with text (designed to be used alongside the map nodes; requires
 #   signs_api)
-metrosigns_create_text (Enable to create signs with text. true/false) bool true
+metrosigns_create_text (Enable to create signs with text) bool true
 
 # -------------------------------------------------------------------------------------------------
 # City settings
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create items for Athens Metro
-metrosigns_create_athens (Enable to create Athens Metro items. true/false) bool false
+metrosigns_create_athens (Enable to create Athens Metro items) bool false
 # If enabled, create items for Bangkok BTS Skytrain
-metrosigns_create_bangkok (Enable to create Bangkok BTS Skytrain items. true/false) bool false
+metrosigns_create_bangkok (Enable to create Bangkok BTS Skytrain items) bool false
 # If enabled, create items for Berlin U-Bahn
-metrosigns_create_berlin (Enable to create Berlin U-Bahn items. true/false) bool false
+metrosigns_create_berlin (Enable to create Berlin U-Bahn items) bool false
 # If enabled, create items for Bucharest Metro
-metrosigns_create_bucharest (Enable to create Bucharest Metro items. true/false) bool false
+metrosigns_create_bucharest (Enable to create Bucharest Metro items) bool false
 # If enabled, create items for Budapest Metro
-metrosigns_create_budapest (Enable to create Budapest Metro items. true/false) bool false
+metrosigns_create_budapest (Enable to create Budapest Metro items) bool false
 # If enabled, create items for Glasgow Subway
-metrosigns_create_glasgow (Enable to create Glasgow Subway items. true/false) bool false
+metrosigns_create_glasgow (Enable to create Glasgow Subway items) bool false
 # If enabled, create items for Ho Chi Minh City Metro
-metrosigns_create_hcmc (Enable to create Ho Chi Minh City Metro items. true/false) bool false
+metrosigns_create_hcmc (Enable to create Ho Chi Minh City Metro items) bool false
 # If enabled, create items for London Underground
-metrosigns_create_london (Enable to create London Underground items. true/false) bool true
+metrosigns_create_london (Enable to create London Underground items) bool true
 # If enabled, create items for Luton to Dunstable Busway
-metrosigns_create_luton (Enable to create Luton to Dunstable Busway items. true/false) bool false
+metrosigns_create_luton (Enable to create Luton to Dunstable Busway items) bool false
 # If enabled, create items for Madrid Metro
-metrosigns_create_madrid (Enable to create Madrid Metro items. true/false) bool false
+metrosigns_create_madrid (Enable to create Madrid Metro items) bool false
 # If enabled, create items for Moscow Metro
-metrosigns_create_moscow (Enable to create Moscow Metro items. true/false) bool false
+metrosigns_create_moscow (Enable to create Moscow Metro items) bool false
 # If enabled, create items for New York City Subway
-metrosigns_create_newyork (Enable to create New York City Subway items. true/false) bool false
+metrosigns_create_newyork (Enable to create New York City Subway items) bool false
 # If enabled, create items for Paris Metro
-metrosigns_create_paris (Enable to create Paris Metro items. true/false) bool false
+metrosigns_create_paris (Enable to create Paris Metro items) bool false
 # If enabled, create items for Prague Metro
-metrosigns_create_prague (Enable to create Prague Metro items. true/false) bool false
+metrosigns_create_prague (Enable to create Prague Metro items) bool false
 # If enabled, create items for Rome Metro
-metrosigns_create_rome (Enable to create Rome Metro items. true/false) bool false
+metrosigns_create_rome (Enable to create Rome Metro items) bool false
 # If enabled, create items for Stockholm Metro
-metrosigns_create_stockholm (Enable to create Stockholm Metro items. true/false) bool false
+metrosigns_create_stockholm (Enable to create Stockholm Metro items) bool false
 # If enabled, create items for Taipei Metro
-metrosigns_create_taipei (Enable to create Taipei Metro items. true/false) bool false
+metrosigns_create_taipei (Enable to create Taipei Metro items) bool false
 # If enabled, create items for Tokyo Metro
-metrosigns_create_tokyo (Enable to create Tokyo Metro items. true/false) bool false
+metrosigns_create_tokyo (Enable to create Tokyo Metro items) bool false
 # If enabled, create items for Toronto Subway
-metrosigns_create_toronto (Enable to create Toronto Subway items. true/false) bool false
+metrosigns_create_toronto (Enable to create Toronto Subway items) bool false
 # If enabled, create items for Vienna U-Bahn
-metrosigns_create_vienna (Enable to create Vienna U-Bahn items. true/false) bool false
+metrosigns_create_vienna (Enable to create Vienna U-Bahn items) bool false

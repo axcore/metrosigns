@@ -9,7 +9,7 @@
 --      from display_modpack
 ---------------------------------------------------------------------------------------------------
 
-if HAVE_SIGNS_API_FLAG and metrosigns.create_all_flag or metrosigns.create_text_flag then
+if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text_flag) then
 
     local category = "Signs with text"
     metrosigns.register_category(category)

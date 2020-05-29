@@ -22,6 +22,27 @@ The mod includes and builds on material from the following mods:
 * `trainblocks <https://github.com/maxhipp/trainblocks_bc>`__ by Maxx
 * `roads <https://cheapiesystems.com/git/roads/>`__ by cheapie
 
+Dependencies
+------------
+
+Requires Minetest v5.0 (or later). There are no other dependencies.
+
+Optional dependencies
+---------------------
+
+If default and `basic_materials <https://gitlab.com/VanessaE/basic_materials>`__ are loaded, the sign writing machine and ink cartridges are craftable.
+
+If signs_api from `display_modpack <https://github.com/pyrollo/display_modpack>`__ is loaded, you can create signs with customisable text.
+
+Downloads
+---------
+
+Latest release: `ZIP <https://github.com/axcore/metrosigns>`__, or `browse the code <https://github.com/axcore/metrosigns>`__.
+
+Known bugs
+----------
+- The sign-writing machine will not display more than one page of signs at a time. I'm not sure why; the problem may be in my code, or the original `roads <https://cheapiesystems.com/git/roads/>`__ mod, or even in Minetest itself
+
 Licences
 --------
 
@@ -36,25 +57,54 @@ Code and textures: `A S Lewis <https://github.com/axcore/>`__.
 
 Code and texture contributors: gpcf/orwell, Max, cheapie
 
-Dependencies
-------------
+Settings
+--------
 
-There are no dependencies. **NB This is currently not true - see below.**
+Because metrosigns can create so many items, most of them are disabled by default. 
 
-Optional dependencies
----------------------
+In Minetest's main menu, you can decide which to enable.  Click **Settings > All settings > Mods > metrosigns**. If you really want to enable everything, you can do that by clicking on **Enable to create all items**.
 
-If default and `basic_materials <https://gitlab.com/VanessaE/basic_materials>`__ are loaded, the sign writing machine and ink cartridges are craftable.
+Otherwise, disable that option, and enable one or more of the options below it. Most users will prefer to use just London Underground signs, or just Paris Metro signs. Each of the 20 cities has a distinctive style, so enable the one you like best, and disable the others.
 
-If signs_api from `display_modpack <https://github.com/pyrollo/display_modpack>`__ is loaded, you can create signs with customisable text.
+By default, metrosigns provides its own line and platform signs in the range 11-20. The maximum range is 1-99. (If you specify invalid values, none of the signs are enabled).
 
-Downloads
----------
+The reason for using 11 as the minimum value, and not 1, is that the code copied from `advtrains_subwayblocks <https://git.gpcf.eu/?p=advtrains_subwayblocks.git>`__ and `trainblocks <https://github.com/maxhipp/trainblocks_bc>`__ already provides signs in the range 1-10. Note that those signs are labelled "1", "2", "3"..., whereas the new metrosigns are labelled "01", "02", "03"... (and so on). If you prefer to have two digits on *every* sign, you can change the minimum value to 1.
 
-The latest release is available `here <https://github.com/axcore/metrosigns>`__.
+Setting overrides
+~~~~~~~~~~~~~~~~~
 
-Screenshots
------------
+Minetest's main menu settings appear to be set in stone, once a world has been created. If you want to override those settings every time you play the world, you can do so in the metrosigns **settings.lua** file.
+
+How to use
+----------
+
+In survival mode, you can use the sign writing machine to create as many signs as you need.
+
+The first step is to craft some ink cartridges. There are three types: red, green and blue. You'll need one of each.
+
+Ink cartridges are crafted with plastic sheets and red/green/blue dye.
+
+.. image:: screenshots/recipe1.png
+  :alt: Ink cartridge recipe
+
+Then craft the sign writer itself using steel ingots, plastic sheets, simple motors and a simple energy crystal.
+
+.. image:: screenshots/recipe2.png
+  :alt: Sign writer recipe
+
+Place the machine somewhere and then right-click it to open the interface. You'll need to insert red, green and blue cartridges, as well as some more plastic sheets, into the slots. 
+
+When everything is added, you should be able to see some signs. To select a different set of signs, use the drop-down box on the left side of the interface. To "write" a sign, simply drag it into your inventory.
+
+Sign writing consumes ink. The amount of ink used depends on the sign you're writing. Assuming a full set of carridges, you can write 2 lightboxes, 5 map signs or 10 line/platform signs.
+
+Cartridges can be refilled in the crafting grid.
+
+.. image:: screenshots/recipe3.png
+  :alt: Cartridge refill recipe
+
+More screenshots
+----------------
 
 .. image:: screenshots/example2.png
   :alt: Sugn-writing machine
@@ -67,10 +117,3 @@ Screenshots
 
 .. image:: screenshots/example5.png
   :alt: Various platform signs
-
-Known bugs
-----------
-- Minetest will not (or cannot) read settingtypes.txt correctly. Until this is resolved, all nodes are available by default
-- The sign-writing machine will not display more than one page of signs at a time
-- signs_api from display_modpack should be an optional dependency, but the minetest game won't start (sometimes) if signs_api is not loaded
-- Sounds for the sign-writing machine are commented out because I don't know how to make them work
