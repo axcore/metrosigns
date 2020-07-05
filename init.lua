@@ -25,7 +25,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 0
+metrosigns.ver_min = 5
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -151,6 +151,8 @@ metrosigns.create_tokyo_flag = minetest.setting_get("metrosigns_create_tokyo") o
 metrosigns.create_toronto_flag = minetest.setting_get("metrosigns_create_toronto") or false
 metrosigns.create_vienna_flag = minetest.setting_get("metrosigns_create_vienna") or false
 
+metrosigns.create_tabyss_flag = minetest.setting_get("metrosigns_create_tabyss") or false
+
 -- Override one or more of these settings by uncommenting the lines in this file
 dofile(metrosigns.path_mod.."/settings.lua")
 
@@ -224,6 +226,12 @@ dofile(metrosigns.path_mod.."/customsigns.lua")
 ---------------------------------------------------------------------------------------------------
 
 dofile(metrosigns.path_mod.."/citysigns.lua")
+
+---------------------------------------------------------------------------------------------------
+-- Server-specific signs
+---------------------------------------------------------------------------------------------------
+
+dofile(metrosigns.path_mod.."/serversigns.lua")
 
 ---------------------------------------------------------------------------------------------------
 -- Sign-writing machines and ink cartridges

@@ -46,3 +46,5 @@
 --metrosigns.create_tokyo_flag = false
 --metrosigns.create_toronto_flag = false
 --metrosigns.create_vienna_flag = false
+
+--metrosigns.create_tabyss_flag = false

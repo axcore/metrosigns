@@ -92,3 +92,10 @@ metrosigns_create_tokyo (Enable to create Tokyo Metro items) bool false
 metrosigns_create_toronto (Enable to create Toronto Subway items) bool false
 # If enabled, create items for Vienna U-Bahn
 metrosigns_create_vienna (Enable to create Vienna U-Bahn items) bool false
+
+# -------------------------------------------------------------------------------------------------
+# Server settings
+# -------------------------------------------------------------------------------------------------
+
+# If enabled, create items for Tunelers' Abyss
+metrosigns_create_tabyss (Enable to create Tunnelers' Abyss items) bool false
