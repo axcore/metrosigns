@@ -149,7 +149,8 @@ function add_map(city, city_descrip, line_table, type_table)
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "termrc", "right terminus"
                 )
-            elseif string.find(unit, "station") then
+            -- Tunnelers' Abyss map signs use istation for interchanges not at the end of a line
+            elseif string.find(unit, "station") and unit ~= "istation" then
                 add_map_unit(
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "terml", "left terminus"

@@ -18,7 +18,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
     metrosigns.register_category(server_descrip)
 
     add_lightbox(server, server_descrip)
-    -- (GS metro gets its own lightbox)
+    -- GS metro gets its own lightbox
     minetest.register_node("metrosigns:box_tabyss_metro", {
         description = "Grapeyard Superb lightbox",
         tiles = {
@@ -70,7 +70,8 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
         }
     )
 
-    -- (Interchanges show the colours of the connecting lines)
+    -- Interchanges show the colours of the connecting lines in the centre of the texture
+    -- These interchanges are not at the end of a line
     add_map(
         server,
         server_descrip,
@@ -81,19 +82,16 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["s1_s2_s15"] = "Abyssal Express",
             ["s1_s2_s6"] = "Abyssal Express",
             ["s1_s2"] = "Abyssal Express",
-            ["s2_s3_s4"] = "Fractal Plains",
             ["s2_s3_t1"] = "Fractal Plains",
             ["s2_s3"] = "Fractal Plains",
             ["s2_spn"] = "Fractal Plains",
             ["s2_s1_s15"] = "Fractal Plains",
             ["s2_s1_s6"] = "Fractal Plains",
             ["s2_s1"] = "Fractal Plains",
-            ["s3_s2_s4"] = "Erosion Trap",
             ["s3_s2_t1"] = "Erosion Trap",
             ["s3_s2"] = "Erosion Trap",
             ["s3_s1"] = "Erosion Trap",
             ["s3_s1_s15"] = "Erosion Trap",
-            ["s4_s2_s3"] = "Coram Line",
             ["s4_spn"] = "Coram Line",
             ["s5_s15"] = "Thorviss Line",
             ["s5_spn"] = "Thorviss Line",
@@ -102,6 +100,20 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["s15_s1"] = "Beach Line",
             ["s15_s1_s4"] = "Beach Line",
             ["s15_s5"] = "Beach Line",
+        },
+        {
+            ["istation"] = "Interchange",
+        }
+    )
+    
+    -- These interchanges ARE at the end of a line
+    add_map(
+        server,
+        server_descrip,
+        {
+            ["s2_s3_s4"] = "Fractal Plains",
+            ["s3_s2_s4"] = "Erosion Trap",
+            ["s4_s2_s3"] = "Coram Line",
             ["r1_s1_s15"] = "Narsh Express",
             ["t1_s2_s3"] = "Tommy's Line",
             ["t1_t2"] = "Tommy's Line",
@@ -111,7 +123,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
         {
             ["cstation"] = "Interchange",
         }
-    )
+    )    
 
 end
 
