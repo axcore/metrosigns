@@ -17,6 +17,17 @@
 --      https://forum.minetest.net/viewtopic.php?t=13904
 --      Licence: CC-BY-SA 3.0 Unported
 ---------------------------------------------------------------------------------------------------
+-- Do you want to add signs for a a new city/server? This is how to do it:
+--  1. Add a new flag in the 'Load Settings' section below, e.g.
+--          metrosigns.create_mycity_flag
+--  2. Edit settingtypes.txt to add the same flag there
+--  3. Edit settings.lua to add the same flag there
+--  4. Add a new section to citysigns.lua or serversigns.lua, using the existing code as a template
+--  5. Add new textures to the /textures folder
+--  6. If a city's name contains more than one word (e.g. "San Francisco", you'll need to edit the
+--          capitalise() function below
+--  7. That's it!
+---------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------
 -- Create namespaces
@@ -25,7 +36,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 6
+metrosigns.ver_min = 9
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -89,21 +100,24 @@ box_light_source = 10
 -- Variables
 ---------------------------------------------------------------------------------------------------
 
--- Signs are divided into categories. A category's name is the same as the city description (i.e.
---  "London Underground" rather than "London"
--- Ordered list of categories, as displayed in the sign-writing
---  machine's dropdrown box, e.g. categories[1] = "London Underground",
---  categories[2] = "Paris Metro"
+-- Signs are divided into categories. Each category represents a single city (or server). There are
+--      are also some special categories not related to a city or a server, e.g. "Signs with text"
+-- A category's name is the same as the city description (i.e. "London Underground" rather than
+--      "London")
+-- An ordered list of categories, as displayed in the sign-writing machine's dropdrown box, e.g.
+--      categories[1] = "London Underground", categories[2] = "Paris Metro"
 metrosigns.writer.categories = {}
 -- The current category; one of the values in metrosigns.writer.categories. Only signs in this
---  category are visible in the sign-writing machine's list
+--      category are visible in the sign-writing machine's list
 metrosigns.writer.current_category = nil
 -- Ordered list of signs in each category and their properties. The properties are arranged in a
---  table:
+--      table:
+--
 --      category - one of the values in metrosigns.writer.current_category
 --      name - the name of the sign's node, e.g. "metrosigns:map_london_bakerloo_line"
 --      ink_needed - the amount of ink removed from each cartridge when printing the sign, e.g. 10
--- Thus we have, e.g. signtypes["London Underground"][1] = property_table,
+-- Thus we have, e.g.
+--      signtypes["London Underground"][1] = property_table,
 --      signtypes["London Underground"][2] = property_table, etc
 metrosigns.writer.signtypes = {}
 -- The number of signs in each category, e.g. signcounts["London Underground"] = 20
@@ -162,6 +176,15 @@ dofile(metrosigns.path_mod.."/settings.lua")
 
 function capitalise(str)
 
+    -- Returns a capitalised city name. At the moment, only one city name contains more than one
+    --      word, so we create an exception for that
+    --
+    -- Args:
+    --      str (string): The lower-case city name used by this mod, e.g. "london" or "newyork"
+    --
+    -- Return values:
+    --      Returns the capitalised city name, e.g. "London" or "New York"
+
     if str == "newyork" then
         return "New York"
     else
@@ -176,8 +199,14 @@ function isint(n)
 
 end
 
--- (Used by the sign-writing machine, if it is created)
 function metrosigns.register_category(category)
+
+    -- Adds a new category (representing a single city, or a single server)
+    --
+    -- Args:
+    --      category (string): The category name, which will be visible in the sign-writing
+    --          machine's dropdown box. See the category-naming hints above; i.e. the calling
+    --          function should specify "London Underground" rather than "London"
 
     table.insert(metrosigns.writer.categories, category)
     metrosigns.writer.signcounts[category] = 0
@@ -189,6 +218,18 @@ function metrosigns.register_category(category)
 end
 
 function metrosigns.register_sign(category, node, ink_needed)
+
+    -- Registers a sign. All types of sign - lightboxes, line/platform signs, map signs and text
+    --      signs - are registered via a call to this function
+    --
+    -- Args:
+    --      category (string): The category to which the sign belongs. Must be one of the items in
+    --          metrosigns.writer.categories
+    --      node (string): The node name, e.g. "metrosigns:map_london_wlcity_line"
+    --      ink_needed (int): The amount of ink required to write the sign; should be consistent
+    --          with the values specified above (i.e. metrosigns.writer.box_units,
+    --          metrosigns.writer.sign_units, metrosigns.writer.map_units or
+    --          metrosigns.writer.text_units)
 
     local data = {category=category, name=node, ink_needed=ink_needed}
     table.insert(metrosigns.writer.signtypes[category], data)

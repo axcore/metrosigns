@@ -105,7 +105,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["istation"] = "Interchange",
         }
     )
-    
+
     -- These interchanges ARE at the end of a line
     add_map(
         server,
@@ -123,7 +123,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
         {
             ["cstation"] = "Interchange",
         }
-    )    
+    )
 
 end
 

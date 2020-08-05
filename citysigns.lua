@@ -5,10 +5,17 @@
 ---------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------
--- City-specific functions
+-- City-specific functions (can also be called by nodes specified in serversigns.lua)
 ---------------------------------------------------------------------------------------------------
 
 function add_lightbox(city, city_descrip)
+
+    -- Adds a lightbox node (every city usually has at least one)
+    --
+    -- Args:
+    --      city (string): The short city name, e.g. "london"
+    --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
+    --          one of the categories specified by metrosigns.writer.categories
 
     minetest.register_node("metrosigns:box_"..city, {
         description = city_descrip.." lightbox",
@@ -28,6 +35,21 @@ function add_lightbox(city, city_descrip)
 end
 
 function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_height)
+
+    -- Adds a line sign
+    --
+    -- Args:
+    --      city (string): The short city name, e.g. "london"
+    --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
+    --          one of the categories specified by metrosigns.writer.categories
+    --      line (string): The short line name/number, used in the node name (e.g. "1", "a1",
+    --          "bakerloo"
+    --      line_descrip (string): The long line name/number, used in the node description (so it
+    --          should be capitalised, e.g. "1", "A1", "Bakerloo Line"
+    --      extra_width (int): The sign can be made wider (minimum value 1), or given its default
+    --          length (0)
+    --      extra_height (int): The sign can be made higher (minimum value 1), or given its default
+    --          height (0)
 
     local cap_city = capitalise(city)
     local node = "metrosigns:sign_"..city.."_line_"..line
@@ -64,7 +86,18 @@ end
 
 function add_sign_special(city, city_descrip, route, route_descrip)
 
-    -- Used for New York and Stockholm, which have multiple routes on each line
+    -- Modified version of add_sign(); used for New York and Stockholm, which have multiple routes
+    --      on each line
+    -- Adds a line sign
+    --
+    -- Args:
+    --      city (string): The short city name, e.g. "london"
+    --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
+    --          one of the categories specified by metrosigns.writer.categories
+    --      route (string): The short route name/number, used in the node name (e.g. "1", "a1",
+    --          "bakerloo"
+    --      route_descrip (string): The long route name/number, used in the node description (so it
+    --          should be capitalised, e.g. "1", "A1", "Bakerloo Line"
 
     local cap_city = capitalise(city)
     local node = "metrosigns:sign_"..city.."_route_"..route
@@ -96,6 +129,33 @@ end
 function add_map_unit(
     city, city_descrip, line, line_descrip, unit, unit_descrip, terminus, terminus_descrip
 )
+
+    -- Usually called by add_map(), but can be called by each city/server as required (see examples
+    --      in the code below)
+    -- Adds a single map sign
+    --
+    -- Args:
+    --      city (string): The short city name, e.g. "london"
+    --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
+    --          one of the categories specified by metrosigns.writer.categories
+    --      line (string): The short line name/number, used in the node name (e.g. "1", "a1",
+    --          "bakerloo"
+    --      line_descrip (string): The long line name/number, used in the node description (so it
+    --          should be capitalised, e.g. "1", "A1", "Bakerloo Line"
+    --      unit (string): The type of map sign. Typical values include "line" for a section of the
+    --          line without a station, "station" for a section of the line with a normal station,
+    --          "cstation" for an interchange station. Any non-empty string is acceptable, and some
+    --          cities/servers may use their own custom values (e.g. the London Underground has
+    --          different signs for stations which are wheelchair-accessible)
+    --      unit_descrip (string): A description for the map sign, used in the node description
+    --          (e.g. "Line", "Station", "Interchange")
+    --      terminus (string): Default value is an empty string. Four other values are used to
+    --          modify a map sign to show a terminus (the end of the line): "terml" and "termr" for
+    --          normal stations, and "termlc" and "termrc" for interchange stations. The map sign
+    --          is modified by applying a blank texture over a part of the original texture, hiding
+    --          the line on the far left or far right side of the sign
+    --      terminus_descrip (string): A description for the terminus map sign, used in the node
+    --          description (e.g. "left terminus", "right terminus"
 
     local cap_city, node, description, img
 
@@ -136,6 +196,19 @@ function add_map_unit(
 end
 
 function add_map(city, city_descrip, line_table, type_table)
+
+    -- Adds one or more map signs. The signs to add are specified by two tables. The tables can
+    --      contain any values (but you should follow the examples below as closely as possible)
+    --
+    -- Args:
+    --      city (string): The short city name, e.g. "london"
+    --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
+    --          one of the categories specified by metrosigns.writer.categories
+    --      line_table (table): A set of lines or routes for a city/server
+    --      type_table (table): A set of map sign types. For every line/route, there are typically
+    --          several types - a normal station, an interchange station, a section of the line
+    --          with no station, and so on
+
 
     for line, line_descrip in pairs(line_table) do
         for unit, unit_descrip in pairs(type_table) do

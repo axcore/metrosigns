@@ -14,18 +14,14 @@
 -- Functions
 ---------------------------------------------------------------------------------------------------
 
-function metrosigns.writer.can_dig(pos)
+function metrosigns.writer.check_supplies(pos)
 
-    local meta = minetest.get_meta(pos)
-    local inv = meta:get_inventory()
-    return (
-        inv:is_empty("redcart") and inv:is_empty("greencart")
-        and inv:is_empty("bluecart") and inv:is_empty("plastic")
-    )
-
-end
-
-function metrosigns.writer.checksupplies(pos)
+    -- Called by metrosigns.writer.populateoutput()
+    -- Signs are only visible in the sign-writing machine if the user has added plastic sheets and
+    --      ink cartridges
+    --
+    -- Return values:
+    --  Returns true if signs can be displayed, false if they can't be displayed
 
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
@@ -54,6 +50,14 @@ end
 
 function metrosigns.writer.nom(pos, amount)
 
+    -- Called by on_metadata_inventory_take()
+    -- When the player takes an item from the sign-writing machine's inventory into their own
+    --      inventory, hence 'writing' a sign, reduce the amount of available ink/plastic
+    --      accordingly
+    --
+    -- Args:
+    --      amount (int): The amount of ink needed to write the sign
+
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     local redcart = inv:get_stack("redcart", 1)
@@ -75,6 +79,9 @@ end
 
 function metrosigns.writer.populateoutput(pos)
 
+    -- Called by several functions
+    -- Displays (or updates) the formspec for the sign-writing machine
+
     -- Sanity check: If no signs have been defined, then there is no need to display a formspec
     if metrosigns.writer.current_category == nil then
         return
@@ -86,25 +93,35 @@ function metrosigns.writer.populateoutput(pos)
     local inv = meta:get_inventory()
     local page = meta:get_int("page")
     local maxpage = math.ceil(typescount/pagesize)
+    local dropdown_string = ""
+    local dropdown_index = 1
 
     inv:set_list("output", {})
     inv:set_size("output", typescount)
 
-    if metrosigns.writer.checksupplies(pos) then
+    if metrosigns.writer.check_supplies(pos) then
 
-        for k,v in pairs(metrosigns.writer.signtypes[metrosigns.writer.current_category]) do
+        for k, v in pairs(metrosigns.writer.signtypes[metrosigns.writer.current_category]) do
             inv:set_stack("output", k, v.name)
         end
 
     end
 
-    local dropdown_string = ""
     for k, v in ipairs(metrosigns.writer.categories) do
+
+        -- The dropdown_string includes all available categories
         if k == 1 then
             dropdown_string = v
         else
             dropdown_string = dropdown_string..","..v
         end
+
+        -- This fixes an issue in the parent roads mod, in which the dropdown box used to
+        --      immediately reset itself
+        if metrosigns.writer.current_category == v then
+            dropdown_index = k
+        end
+
     end
 
     meta:set_string("formspec", "size[11,10]"..
@@ -120,7 +137,7 @@ function metrosigns.writer.populateoutput(pos)
         "list[current_name;plastic;1.5,3;1,1;]" ..
         -- Sign categories
         "label[0,5;Sign\nCategory]" ..
-        "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";1]" ..
+        "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";"..tostring(dropdown_index).."]" ..
         -- List of signs
         "list[current_name;output;2.8,0;8,5;"..tostring((page-1)*pagesize).."]" ..
         -- Player inventory
@@ -134,60 +151,9 @@ function metrosigns.writer.populateoutput(pos)
 
 end
 
-function metrosigns.writer.on_construct(pos)
-
-    local meta = minetest.get_meta(pos)
-    local inv = meta:get_inventory()
-
-    meta:set_int("page", 1)
-    meta:set_int("maxpage", 1)
-
-    inv:set_size("redcart", 1)
-    inv:set_size("greencart", 1)
-    inv:set_size("bluecart", 1)
-    inv:set_size("plastic", 1)
-
-    metrosigns.writer.populateoutput(pos)
-
-end
-
-function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
-
-    local meta = minetest.get_meta(pos)
-
-    if fields.category then
-
-        -- User has activated the dropdown box
-        if metrosigns.writer.signtypes[fields.category] ~= nil then
-            metrosigns.writer.current_category = fields.category
-        end
-
-    else
-
-        -- User has clicked the page buttons
-        local page = meta:get_int("page")
-        local maxpage = meta:get_int("maxpage")
-
-        if fields.prevpage then
-            page = page - 1
-            if page < 1 then
-                page = maxpage
-            end
-            meta:set_int("page",page)
-        elseif fields.nextpage then
-            page = page + 1
-            if page > maxpage then
-                page = 1
-            end
-            meta:set_int("page",page)
-        end
-
-    end
-
-    -- In all cases, redraw the list of signs for the current category
-    metrosigns.writer.populateoutput(pos)
-
-end
+---------------------------------------------------------------------------------------------------
+-- Callbacks
+---------------------------------------------------------------------------------------------------
 
 function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, stack, player)
 
@@ -231,6 +197,34 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
 end
 
+function metrosigns.writer.can_dig(pos)
+
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    return (
+        inv:is_empty("redcart") and inv:is_empty("greencart")
+        and inv:is_empty("bluecart") and inv:is_empty("plastic")
+    )
+
+end
+
+function metrosigns.writer.on_construct(pos)
+
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
+    meta:set_int("page", 1)
+    meta:set_int("maxpage", 1)
+
+    inv:set_size("redcart", 1)
+    inv:set_size("greencart", 1)
+    inv:set_size("bluecart", 1)
+    inv:set_size("plastic", 1)
+
+    metrosigns.writer.populateoutput(pos)
+
+end
+
 function metrosigns.writer.on_metadata_inventory_put(pos)
 
     metrosigns.writer.populateoutput(pos)
@@ -245,6 +239,51 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index)
         metrosigns.writer.nom(pos, cost)
     end
 
+    metrosigns.writer.populateoutput(pos)
+
+end
+
+function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
+
+    -- This function fixes two issues in the original 'roads' mod
+    -- Firstly, the previous/next buttons did not work (fixed by checking them before checking the
+    --      dropdown box)
+    -- Secondly, when the user switched categories, the first page was not made visible
+    --      automatically (very confusing if the new category has only one page)
+
+    local meta = minetest.get_meta(pos)
+    local page = meta:get_int("page")
+    local maxpage = meta:get_int("maxpage")
+
+    if fields.prevpage then
+
+        -- User has clicked the previous button
+        page = page - 1
+        if page < 1 then
+            page = maxpage
+        end
+        meta:set_int("page",page)
+
+    elseif fields.nextpage then
+
+        -- User has clicked the next button
+        page = page + 1
+        if page > maxpage then
+            page = 1
+        end
+        meta:set_int("page",page)
+
+    elseif fields.category then
+
+        -- User has activated the dropdown box
+        if metrosigns.writer.signtypes[fields.category] ~= nil then
+            metrosigns.writer.current_category = fields.category
+            meta:set_int("page",1)
+        end
+
+    end
+
+    -- In all cases, redraw the list of signs for the current category
     metrosigns.writer.populateoutput(pos)
 
 end

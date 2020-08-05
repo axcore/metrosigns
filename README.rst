@@ -10,11 +10,10 @@ This is a mod for `Minetest <https://www.minetest.net/>`__, providing an extende
 The mod includes:
 
 * Semi-realistic signage from twenty major cities - the London Underground, the Paris Metro, the New York Subway - and more!
-* Line number signs from 1-99, using the colour scheme established by `advtrains_subwayblocks <https://git.gpcf.eu/?p=advtrains_subwayblocks.git>`__
-* Platform signs from 1-99
+* Line and platform number signs from 1-99
 * A sign-writing machine (for use in survival mode)
 * Nodes from `advtrains_subwayblocks <https://git.gpcf.eu/?p=advtrains_subwayblocks.git>`__ and `trainblocks <https://github.com/maxhipp/trainblocks_bc>`__, if those mods aren't already loaded
-* Over 1300 items in total
+* Over 1400 items in total
 
 The mod includes and builds on material from the following mods:
 
@@ -25,7 +24,7 @@ The mod includes and builds on material from the following mods:
 Dependencies
 ------------
 
-Requires Minetest v5.0 (or later). There are no other dependencies.
+Requires Minetest v5.0 (or later). There are no hard dependencies.
 
 Optional dependencies
 ---------------------
@@ -38,10 +37,6 @@ Downloads
 ---------
 
 Latest release: `ZIP <https://github.com/axcore/metrosigns>`__, or `browse the code <https://github.com/axcore/metrosigns>`__.
-
-Known bugs
-----------
-- The sign-writing machine will not display more than one page of signs at a time. I'm not sure why; the problem may be in my code, or the original `roads <https://cheapiesystems.com/git/roads/>`__ mod, or even in Minetest itself
 
 Licences
 --------
@@ -60,11 +55,13 @@ Code and texture contributors: gpcf/orwell, Max, cheapie
 Settings
 --------
 
-Because metrosigns can create so many items, most of them are disabled by default. 
+Because metrosigns can create so many items, most of them are disabled by default.
 
 In Minetest's main menu, you can decide which to enable.  Click **Settings > All settings > Mods > metrosigns**. If you really want to enable everything, you can do that by clicking on **Enable to create all items**.
 
 Otherwise, disable that option, and enable one or more of the options below it. Most users will prefer to use just London Underground signs, or just Paris Metro signs. Each of the 20 cities has a distinctive style, so enable the one you like best, and disable the others.
+
+Items can be also be enabled/disabled by editing the file **settings.lua**.
 
 By default, metrosigns provides its own line and platform signs in the range 11-20. The maximum range is 1-99. (If you specify invalid values, none of the signs are enabled).
 
@@ -92,7 +89,7 @@ Then craft the sign writer itself using steel ingots, plastic sheets, simple mot
 .. image:: screenshots/recipe2.png
   :alt: Sign writer recipe
 
-Place the machine somewhere and then right-click it to open the interface. You'll need to insert red, green and blue cartridges, as well as some more plastic sheets, into the slots. 
+Place the machine somewhere and then right-click it to open the interface. You'll need to insert red, green and blue cartridges, as well as some more plastic sheets, into the slots.
 
 When everything is added, you should be able to see some signs. To select a different set of signs, use the drop-down box on the left side of the interface. To "write" a sign, simply drag it into your inventory.
 
