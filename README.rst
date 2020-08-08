@@ -67,11 +67,6 @@ By default, metrosigns provides its own line and platform signs in the range 11-
 
 The reason for using 11 as the minimum value, and not 1, is that the code copied from `advtrains_subwayblocks <https://git.gpcf.eu/?p=advtrains_subwayblocks.git>`__ and `trainblocks <https://github.com/maxhipp/trainblocks_bc>`__ already provides signs in the range 1-10. Note that those signs are labelled "1", "2", "3"..., whereas the new metrosigns are labelled "01", "02", "03"... (and so on). If you prefer to have two digits on *every* sign, you can change the minimum value to 1.
 
-Setting overrides
-~~~~~~~~~~~~~~~~~
-
-Minetest's main menu settings appear to be set in stone, once a world has been created. If you want to override those settings every time you play the world, you can do so in the metrosigns **settings.lua** file.
-
 How to use
 ----------
 
