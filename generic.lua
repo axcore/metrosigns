@@ -174,7 +174,8 @@ function add_map_unit(
 
     minetest.register_node(node, {
         description = description,
-        tiles = {img},
+        -- Reverse the back image, so map signs can be viewed from the front or back
+        tiles = {img, img, img, img, img.."^[transform4", img},
         inventory_image = img,
         groups = {cracky = 3},
         light_source = 5,

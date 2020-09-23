@@ -313,7 +313,7 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
 
             minetest.register_node(node, {
                 description = city_descrip.." "..line_descrip.." "..unit_descrip.." sign",
-                tiles = {img},
+                tiles = {img, img, img, img, img.."^[transform4", img},
                 inventory_image = img,
                 groups = {cracky = 3},
                 light_source = 5,
@@ -779,7 +779,7 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
 
             minetest.register_node(node, {
                 description = cap_city.." "..route.. " station sign ("..side_descrip.." terminus)",
-                tiles = {img},
+                tiles = {img, img, img, img, img.."^[transform4", img},
                 inventory_image = img,
                 groups = {cracky = 3},
                 light_source = 5,

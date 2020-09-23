@@ -97,7 +97,13 @@ function metrosigns.writer.populateoutput(pos)
     local dropdown_index = 1
 
     inv:set_list("output", {})
-    inv:set_size("output", typescount)
+    -- For aesthetic reasons, I prefer that the first page is a full 8x5 grid, even if all of the
+    --  slots are empty. Later pages, however, can have exactly as many slots as they need
+    if typescount > 40 then
+        inv:set_size("output", typescount)
+    else
+        inv:set_size("output", 40)
+    end
 
     if metrosigns.writer.check_supplies(pos) then
 
@@ -126,26 +132,35 @@ function metrosigns.writer.populateoutput(pos)
 
     meta:set_string("formspec", "size[11,10]"..
         -- Cartridges
-        "label[0,0;Red\nCartridge]" ..
-        "list[current_name;redcart;1.5,0;1,1;]" ..
-        "label[0,1;Green\nCartridge]" ..
-        "list[current_name;greencart;1.5,1;1,1;]" ..
-        "label[0,2;Blue\nCartridge]" ..
-        "list[current_name;bluecart;1.5,2;1,1;]" ..
+        "label[0,0;Red\nCartridge]"..
+        "list[current_name;redcart;1.5,0;1,1;]"..
+        "label[0,1;Green\nCartridge]"..
+        "list[current_name;greencart;1.5,1;1,1;]"..
+        "label[0,2;Blue\nCartridge]"..
+        "list[current_name;bluecart;1.5,2;1,1;]"..
         -- Plastic
-        "label[0,3;Plastic\nSheet]" ..
-        "list[current_name;plastic;1.5,3;1,1;]" ..
+        "label[0,3;Plastic\nSheet]"..
+        "list[current_name;plastic;1.5,3;1,1;]"..
         -- Sign categories
-        "label[0,5;Sign\nCategory]" ..
-        "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";"..tostring(dropdown_index).."]" ..
+        "label[0,5;Sign\nCategory]"..
+        "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";"..tostring(dropdown_index).."]"..
         -- List of signs
-        "list[current_name;output;2.8,0;8,5;"..tostring((page-1)*pagesize).."]" ..
+        "list[current_name;output;2.8,0;8,5;"..tostring((page-1)*pagesize).."]"..
         -- Player inventory
         "list[current_player;main;1.5,6.25;8,4;]"..
         -- Page buttons
         "button[5.5,5;1,1;prevpage;<<<]"..
         "button[8.5,5;1,1;nextpage;>>>]"..
-        "label[6.75,5.25;Page "..page.." of "..maxpage.."]"
+        "label[6.75,5.25;Page "..page.." of "..maxpage.."]"..
+        -- List rings
+        "listring[current_player;main]"..
+        "listring[current_name;redcart]"..
+        "listring[current_player;main]"..
+        "listring[current_name;greencart]"..
+        "listring[current_player;main]"..
+        "listring[current_name;bluecart]"..
+        "listring[current_player;main]"..
+        "listring[current_name;plastic]"
     )
     meta:set_int("maxpage",maxpage)
 
@@ -157,43 +172,55 @@ end
 
 function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, stack, player)
 
-    if listname == "redcart" then
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local player_inv = player:get_inventory()
+    local move_flag
 
-        if stack:get_name() == "metrosigns:cartridge_red" then
-            return 1
-        else
-            return 0
+    if listname == "redcart" and stack:get_name() == "metrosigns:cartridge_red" then
+        return 1
+    elseif listname == "greencart" and stack:get_name() == "metrosigns:cartridge_green" then
+        return 1
+    elseif listname == "bluecart" and stack:get_name() == "metrosigns:cartridge_blue" then
+        return 1
+    elseif listname == "plastic" and stack:get_name() == "basic_materials:plastic_sheet" then
+        return stack:get_count()
+    end
+
+    -- Cannot rely on the listring to put the right type of cartridge into the right slot;
+    --  a green cartridge would be put into the red cartridge slot
+    -- The workaround is to move the green cartridge into the green slot directly
+    if stack:get_name() == "metrosigns:cartridge_green" and inv:is_empty("greencart") then
+
+        if player_inv:remove_item("main", stack) then
+            inv:add_item("greencart", stack)
+            move_flag = true
         end
 
-    elseif listname == "greencart" then
+    elseif stack:get_name() == "metrosigns:cartridge_blue" and inv:is_empty("bluecart") then
 
-        if stack:get_name() == "metrosigns:cartridge_green" then
-            return 1
-        else
-            return 0
+        if player_inv:remove_item("main", stack) then
+            inv:add_item("bluecart", stack)
+            move_flag = true
         end
 
-    elseif listname == "bluecart" then
+    elseif stack:get_name() == "basic_materials:plastic_sheet" and inv:is_empty("plastic") then
 
-        if stack:get_name() == "metrosigns:cartridge_blue" then
-            return 1
-        else
-            return 0
+        if player_inv:remove_item("main", stack) then
+            inv:add_item("plastic", stack)
+            move_flag = true
         end
-
-    elseif listname == "plastic" then
-
-        if stack:get_name() == "basic_materials:plastic_sheet" then
-            return stack:get_count()
-        else
-            return 0
-        end
-
-    else
-
-        return 0
 
     end
+
+    -- In this situation, the list of writeable signs is not updated automatically
+    if move_flag then
+        metrosigns.writer.populateoutput(pos)
+    end
+
+    -- Having put the green cartridge in the green slot, don't put the greed cartridge in the red
+    --  slot (etc), as well
+    return 0
 
 end
 
