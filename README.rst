@@ -88,7 +88,7 @@ Place the machine somewhere and then right-click it to open the interface. You'l
 
 When everything is added, you should be able to see some signs. To select a different set of signs, use the drop-down box on the left side of the interface. To "write" a sign, simply drag it into your inventory.
 
-Sign writing consumes ink. The amount of ink used depends on the sign you're writing. Assuming a full set of carridges, you can write 2 lightboxes, 5 map signs or 10 line/platform signs.
+Sign writing consumes ink. The amount of ink used depends on the sign you're writing. Assuming a full set of carridges, you can write 4 lightboxes, 10 map signs or 20 line/platform signs.
 
 Cartridges can be refilled in the crafting grid.
 
