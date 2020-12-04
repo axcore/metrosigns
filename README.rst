@@ -90,6 +90,8 @@ When everything is added, you should be able to see some signs. To select a diff
 
 Sign writing consumes ink. The amount of ink used depends on the sign you're writing. Assuming a full set of carridges, you can write 4 lightboxes, 10 map signs or 20 line/platform signs.
 
+If you insert a sign into the recycling slot, you will get back some of your ink. If you're really lucky, you'll recover a plastic sheet, too.
+
 Cartridges can be refilled in the crafting grid.
 
 .. image:: screenshots/recipe3.png

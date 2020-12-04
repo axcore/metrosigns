@@ -141,6 +141,9 @@ function metrosigns.writer.populateoutput(pos)
         -- Plastic
         "label[0,3;Plastic\nSheet]"..
         "list[current_name;plastic;1.5,3;1,1;]"..
+        -- Recycling
+        "label[0,4;Recycling\nSlot]"..
+        "list[current_name;recycle;1.5,4;1,1;]"..
         -- Sign categories
         "label[0,5;Sign\nCategory]"..
         "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";"..tostring(dropdown_index).."]"..
@@ -160,7 +163,9 @@ function metrosigns.writer.populateoutput(pos)
         "listring[current_player;main]"..
         "listring[current_name;bluecart]"..
         "listring[current_player;main]"..
-        "listring[current_name;plastic]"
+        "listring[current_name;plastic]"..
+        "listring[current_player;main]"..
+        "listring[current_name;recycle]"
     )
     meta:set_int("maxpage",maxpage)
 
@@ -174,37 +179,46 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
+    local stack_name = stack:get_name()
+    local stack_count = stack:get_count()
     local player_inv = player:get_inventory()
     local move_flag
 
-    if listname == "redcart" and stack:get_name() == "metrosigns:cartridge_red" then
+    local ink_refund = 0
+    local redcart = inv:get_stack("redcart", 1)
+    local greencart = inv:get_stack("greencart", 1)
+    local bluecart = inv:get_stack("bluecart", 1)
+    local plastic = inv:get_stack("plastic", 1)
+
+    -- Deal with the right node in the right slot
+    if listname == "redcart" and stack_name == "metrosigns:cartridge_red" then
         return 1
-    elseif listname == "greencart" and stack:get_name() == "metrosigns:cartridge_green" then
+    elseif listname == "greencart" and stack_name == "metrosigns:cartridge_green" then
         return 1
-    elseif listname == "bluecart" and stack:get_name() == "metrosigns:cartridge_blue" then
+    elseif listname == "bluecart" and stack_name == "metrosigns:cartridge_blue" then
         return 1
-    elseif listname == "plastic" and stack:get_name() == "basic_materials:plastic_sheet" then
-        return stack:get_count()
+    elseif listname == "plastic" and stack_name == "basic_materials:plastic_sheet" then
+        return stack_count
     end
 
     -- Cannot rely on the listring to put the right type of cartridge into the right slot;
     --  a green cartridge would be put into the red cartridge slot
     -- The workaround is to move the green cartridge into the green slot directly
-    if stack:get_name() == "metrosigns:cartridge_green" and inv:is_empty("greencart") then
+    if stack_name == "metrosigns:cartridge_green" and inv:is_empty("greencart") then
 
         if player_inv:remove_item("main", stack) then
             inv:add_item("greencart", stack)
             move_flag = true
         end
 
-    elseif stack:get_name() == "metrosigns:cartridge_blue" and inv:is_empty("bluecart") then
+    elseif stack_name == "metrosigns:cartridge_blue" and inv:is_empty("bluecart") then
 
         if player_inv:remove_item("main", stack) then
             inv:add_item("bluecart", stack)
             move_flag = true
         end
 
-    elseif stack:get_name() == "basic_materials:plastic_sheet" and inv:is_empty("plastic") then
+    elseif stack_name == "basic_materials:plastic_sheet" and inv:is_empty("plastic") then
 
         if player_inv:remove_item("main", stack) then
             inv:add_item("plastic", stack)
@@ -213,12 +227,83 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
     end
 
+    -- All metrosigns nodes (except lightboxes and the sign writer itself) can be recycled
+    -- For each compatible node added to the recycling slot, the player has a 66% chance of
+    --  receiving some plastic. In addition, they receive between 50-100% of the ink consumed in
+    --  crafting the node
+    if listname == "recycle"
+    and not string.find(stack_name, "sign_writer")
+    and (
+        string.find(stack_name, "metrosigns:sign")
+        or string.find(stack_name, "metrosigns:map")
+        or string.find(stack_name, "signs_road:metrosigns")
+    ) then
+
+        -- Decide how much ink to recover from the recycling process, and restore it to the
+        --  cartridges
+        -- THe player never receives the full amount
+        if string.find(stack_name, "metrosigns:sign") then
+            ink_refund = math.random(1, (metrosigns.writer.sign_units - 1))
+        elseif string.find(stack_name, "metrosigns:map") then
+            ink_refund = math.random(1, (metrosigns.writer.map_units - 1))
+        else
+            ink_refund = math.random(1, (metrosigns.writer.text_units - 1))
+        end
+
+        ink_refund = ink_refund * metrosigns.writer.cartridge_min
+
+        if not inv:is_empty("redcart") then
+            if redcart:get_wear() < ink_refund then
+                redcart:set_wear(0)
+            else
+                redcart:set_wear(redcart:get_wear() - ink_refund)
+            end
+
+            inv:set_stack("redcart", 1, redcart)
+        end
+
+        if not inv:is_empty("greencart") then
+            if greencart:get_wear() < ink_refund then
+                greencart:set_wear(0)
+            else
+                greencart:set_wear(greencart:get_wear() - ink_refund)
+            end
+
+            inv:set_stack("greencart", 1, greencart)
+        end
+
+        if not inv:is_empty("bluecart") then
+            if bluecart:get_wear() < ink_refund then
+                bluecart:set_wear(0)
+            else
+                bluecart:set_wear(bluecart:get_wear() - ink_refund)
+            end
+
+            inv:set_stack("bluecart", 1, bluecart)
+        end
+
+        -- Randomly restore a plastic sheet
+        if math.random(0, 1) <= 0.67 then
+            if inv:is_empty("plastic") then
+                inv:add_item("plastic", ItemStack("basic_materials:plastic_sheet 1"))
+            elseif plastic:get_count() < plastic:get_stack_max() then
+                plastic:set_count(plastic:get_count() + 1)
+                inv:set_stack("plastic", 1, plastic)
+            end
+        end
+
+        -- Destroy the recycled item
+        player_inv:remove_item("main", stack)
+        return 0
+
+    end
+
     -- In this situation, the list of writeable signs is not updated automatically
     if move_flag then
         metrosigns.writer.populateoutput(pos)
     end
 
-    -- Having put the green cartridge in the green slot, don't put the greed cartridge in the red
+    -- Having put the green cartridge in the green slot, don't put the green cartridge in the red
     --  slot (etc), as well
     return 0
 
@@ -231,6 +316,7 @@ function metrosigns.writer.can_dig(pos)
     return (
         inv:is_empty("redcart") and inv:is_empty("greencart")
         and inv:is_empty("bluecart") and inv:is_empty("plastic")
+        and inv:is_empty("recycle")
     )
 
 end
@@ -247,6 +333,7 @@ function metrosigns.writer.on_construct(pos)
     inv:set_size("greencart", 1)
     inv:set_size("bluecart", 1)
     inv:set_size("plastic", 1)
+    inv:set_size("recycle", 1)
 
     metrosigns.writer.populateoutput(pos)
 
@@ -422,7 +509,6 @@ minetest.register_node("metrosigns:sign_writer", {
         "metrosigns_writer_side.png",
         "metrosigns_writer_front.png",
     },
-    inventory_image = "metrosigns_writer_front.png",
     groups = {cracky = 2},
     paramtype = "light",
     paramtype2 = "facedir",

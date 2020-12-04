@@ -45,8 +45,11 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
     add_sign(server, server_descrip, "s4", "Coram Line", 1, 1)
     add_sign(server, server_descrip, "s5", "Thorviss Line", 1, 1)
     add_sign(server, server_descrip, "s6", "Recursive Dragon", 1, 1)
+    add_sign(server, server_descrip, "s8", "Tiny Line", 1, 1)          
+    add_sign(server, server_descrip, "s13", "Exfactor Line", 2, 1)    
     add_sign(server, server_descrip, "s15", "Beach Line", 2, 1)
     add_sign(server, server_descrip, "r1", "Narsh Express", 1, 1)
+    add_sign(server, server_descrip, "r2", "Crystal Line", 1, 1)        
     add_sign(server, server_descrip, "t1", "Tommy's Line", 1, 1)
     add_sign(server, server_descrip, "t2", "Subway", 1, 1)
     -- GS Metro
@@ -73,8 +76,11 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["s4"] = "Coram Line",
             ["s5"] = "Thorviss Line",
             ["s6"] = "Recursive Dragon",
+            ["s8"] = "Tiny Line",           
+            ["s13"] = "Exfactor Line",      
             ["s15"] = "Beach Line",
             ["r1"] = "Narsh Express",
+            ["r2"] = "Crystal Line",        
             ["t1"] = "Tommy's Line",
             ["t2"] = "Subway",
             -- GS Metro (lines 1-3, 4A, 5A, 6-7, 8A use the same colours as above)
@@ -85,61 +91,8 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
         {
             ["line"] = "Line",
             ["station"] = "Station",
-        }
-    )
-
-    -- Interchanges show the colours of the connecting lines in the centre of the texture
-    -- These interchanges are not at the end of a line
-    add_map(
-        server,
-        server_descrip,
-        {
-            ["s1_s15_r1"] = "Abyssal Express",
-            ["s1_s15"] = "Abyssal Express",
-            ["s1_spn"] = "Abyssal Express",
-            ["s1_s2_s15"] = "Abyssal Express",
-            ["s1_s2_s6"] = "Abyssal Express",
-            ["s1_s2"] = "Abyssal Express",
-            ["s2_s3_t1"] = "Fractal Plains",
-            ["s2_s3"] = "Fractal Plains",
-            ["s2_spn"] = "Fractal Plains",
-            ["s2_s1_s15"] = "Fractal Plains",
-            ["s2_s1_s6"] = "Fractal Plains",
-            ["s2_s1"] = "Fractal Plains",
-            ["s3_s2_t1"] = "Erosion Trap",
-            ["s3_s2"] = "Erosion Trap",
-            ["s3_s1"] = "Erosion Trap",
-            ["s3_s1_s15"] = "Erosion Trap",
-            ["s4_spn"] = "Coram Line",
-            ["s5_s15"] = "Thorviss Line",
-            ["s5_spn"] = "Thorviss Line",
-            ["s6_s1_s2"] = "Recursive Dragon",
-            ["s15_s1_r1"] = "Beach Line",
-            ["s15_s1"] = "Beach Line",
-            ["s15_s1_s4"] = "Beach Line",
-            ["s15_s5"] = "Beach Line",
-        },
-        {
             ["istation"] = "Interchange",
-        }
-    )
-
-    -- These interchanges ARE at the end of a line
-    add_map(
-        server,
-        server_descrip,
-        {
-            ["s2_s3_s4"] = "Fractal Plains",
-            ["s3_s2_s4"] = "Erosion Trap",
-            ["s4_s2_s3"] = "Coram Line",
-            ["r1_s1_s15"] = "Narsh Express",
-            ["t1_s2_s3"] = "Tommy's Line",
-            ["t1_t2"] = "Tommy's Line",
-            ["t2_t1"] = "Subway",
-            ["t2_spn"] = "Subway",
-        },
-        {
-            ["cstation"] = "Interchange",
+            ["sstation"] = "Spawn Interchange",
         }
     )
 

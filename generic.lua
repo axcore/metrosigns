@@ -210,7 +210,6 @@ function add_map(city, city_descrip, line_table, type_table)
     --          several types - a normal station, an interchange station, a section of the line
     --          with no station, and so on
 
-
     for line, line_descrip in pairs(line_table) do
         for unit, unit_descrip in pairs(type_table) do
             add_map_unit(city, city_descrip, line, line_descrip, unit, unit_descrip, "", "")
@@ -223,8 +222,7 @@ function add_map(city, city_descrip, line_table, type_table)
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "termrc", "right terminus"
                 )
-            -- Tunnelers' Abyss map signs use istation for interchanges not at the end of a line
-            elseif string.find(unit, "station") and unit ~= "istation" then
+            elseif string.find(unit, "station") then
                 add_map_unit(
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "terml", "left terminus"

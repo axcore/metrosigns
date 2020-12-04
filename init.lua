@@ -36,7 +36,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 19
+metrosigns.ver_min = 22
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -188,6 +188,8 @@ function capitalise(str)
 
     if str == "newyork" then
         return "New York"
+    elseif str == "tabyss" then
+        return "TA"
     else
         return (str:gsub("^%l", string.upper))
     end
