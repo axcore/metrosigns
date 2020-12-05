@@ -80,7 +80,7 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
         sunlight_propagates = true,
         walkable = false
     })
-    metrosigns.register_sign(city_descrip, node, metrosigns.writer.box_units)
+    metrosigns.register_sign(city_descrip, node, metrosigns.writer.sign_units)
 
 end
 

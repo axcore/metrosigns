@@ -38,7 +38,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 27
+metrosigns.ver_min = 28
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -89,11 +89,11 @@ metrosigns.writer.cartridge_max = 60000
 -- Amount of ink used for one unit
 metrosigns.writer.cartridge_min = 1000
 -- Number of units used for printing various kinds of sign
--- (The printing capacity of a cartridge was doubled in v1.12.0)
+-- (The printing capacity of a cartridge was doubled in v1.12.0, but reduced slightly in v1.28.0)
 metrosigns.writer.box_units = 15
-metrosigns.writer.sign_units = 3
-metrosigns.writer.map_units = 6
-metrosigns.writer.text_units = 6
+metrosigns.writer.sign_units = 5
+metrosigns.writer.map_units = 10
+metrosigns.writer.text_units = 10
 
 -- Used in material copied from advtrains_subwayblocks and trainblocks
 box_groups = {cracky = 3}
