@@ -16,6 +16,8 @@
 --      https://cheapiesystems.com/git/roads/
 --      https://forum.minetest.net/viewtopic.php?t=13904
 --      Licence: CC-BY-SA 3.0 Unported
+--
+-- Includes various fixes/additions by Guill4um
 ---------------------------------------------------------------------------------------------------
 -- Do you want to add signs for a a new city/server? This is how to do it:
 --  1. Add a new flag in the 'Load Settings' section below, e.g.
@@ -36,7 +38,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 22
+metrosigns.ver_min = 27
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}

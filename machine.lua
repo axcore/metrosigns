@@ -16,7 +16,7 @@
 
 function metrosigns.writer.check_supplies(pos)
 
-    -- Called by metrosigns.writer.populateoutput()
+    -- Called by metrosigns.writer.populate_output()
     -- Signs are only visible in the sign-writing machine if the user has added plastic sheets and
     --      ink cartridges
     --
@@ -77,7 +77,7 @@ function metrosigns.writer.nom(pos, amount)
 
 end
 
-function metrosigns.writer.populateoutput(pos)
+function metrosigns.writer.populate_output(pos)
 
     -- Called by several functions
     -- Displays (or updates) the formspec for the sign-writing machine
@@ -151,6 +151,12 @@ function metrosigns.writer.populateoutput(pos)
         "list[current_name;output;2.8,0;8,5;"..tostring((page-1)*pagesize).."]"..
         -- Player inventory
         "list[current_player;main;1.5,6.25;8,4;]"..
+        -- (Change by Guill4um - allow printing the signs with SHIFT + click, as well as by
+        --      dragging them from one inventory to another. Reverted because it breaks the code
+        --      below, which allows cartridges to be added to their slots with a SHIFT + click
+        --      (and also because it should require a bit of effort, so that the user doesn't
+        --      accidentally waste ink/plastic)
+--       "listring[]"..
         -- Page buttons
         "button[5.5,5;1,1;prevpage;<<<]"..
         "button[8.5,5;1,1;nextpage;>>>]"..
@@ -188,6 +194,8 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     local redcart = inv:get_stack("redcart", 1)
     local greencart = inv:get_stack("greencart", 1)
     local bluecart = inv:get_stack("bluecart", 1)
+
+    local plastic_refund = 0
     local plastic = inv:get_stack("plastic", 1)
 
     -- Deal with the right node in the right slot
@@ -199,6 +207,59 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         return 1
     elseif listname == "plastic" and stack_name == "basic_materials:plastic_sheet" then
         return stack_count
+    end
+
+    -- (Change by Guill4um - refill cartridges by dropping the dye directly into the same inventory
+    --      slots)
+    if listname == "redcart" and stack_name == "dye:red" then
+
+        if redcart:get_name() == "metrosigns:cartridge_red" then
+            redcart:set_wear(0)
+            inv:set_stack("redcart", 1, redcart)
+            stack:set_count(2)
+            player_inv:remove_item("main", stack)
+            stack:set_count(0)
+            metrosigns.writer.populate_output(pos)
+        end
+
+        return 0
+
+    elseif listname == "greencart" and stack_name == "dye:green" then
+
+        if greencart:get_name() == "metrosigns:cartridge_green" then
+            greencart:set_wear(0)
+            inv:set_stack("greencart",1,greencart)
+            stack:set_count(2)
+            player_inv:remove_item("main", stack)
+            stack:set_count(0)
+            metrosigns.writer.populate_output(pos)
+        end
+
+        return 0
+
+    elseif listname == "bluecart" and stack_name == "dye:blue" then
+
+        if bluecart:get_name() == "metrosigns:cartridge_blue" then
+            bluecart:set_wear(0)
+            inv:set_stack("bluecart",1,bluecart)
+            stack:set_count(2)
+            player_inv:remove_item("main", stack)
+            stack:set_count(0)
+            metrosigns.writer.populate_output(pos)
+        end
+
+        return 0
+
+    -- (Change by Guill4um - drop an item to the ground, rather than erasing it)
+    elseif listname == "main" then
+
+        local player_inv = player:get_inventory()
+        if player_inv:room_for_item("main", stack) then
+            return stack:get_count()
+        else
+            return 0
+        end
+
     end
 
     -- Cannot rely on the listring to put the right type of cartridge into the right slot;
@@ -232,12 +293,10 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     --  receiving some plastic. In addition, they receive between 50-100% of the ink consumed in
     --  crafting the node
     if listname == "recycle"
-    and not string.find(stack_name, "sign_writer")
-    and (
-        string.find(stack_name, "metrosigns:sign")
-        or string.find(stack_name, "metrosigns:map")
-        or string.find(stack_name, "signs_road:metrosigns")
-    ) then
+    and string.find(stack_name, "metrosigns")
+    and not string.find(stack_name, "writer")
+    and not string.find(stack_name, "cartridge")
+    and (string.find(stack_name, "sign") or string.find(stack_name, "map")) then
 
         -- Decide how much ink to recover from the recycling process, and restore it to the
         --  cartridges
@@ -250,7 +309,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
             ink_refund = math.random(1, (metrosigns.writer.text_units - 1))
         end
 
-        ink_refund = ink_refund * metrosigns.writer.cartridge_min
+        ink_refund = ink_refund * metrosigns.writer.cartridge_min * stack_count
 
         if not inv:is_empty("redcart") then
             if redcart:get_wear() < ink_refund then
@@ -283,13 +342,34 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         end
 
         -- Randomly restore a plastic sheet
-        if math.random(0, 1) <= 0.67 then
+        chance = (math.random(0, 100)) / 100
+        if (stack_count == 1 and chance <= 0.67) then
+            plastic_refund = 1
+        elseif stack_count > 1 then
+            plastic_refund = math.floor(stack_count * chance)
+        end
+
+        if plastic_refund > 0 then
+
             if inv:is_empty("plastic") then
-                inv:add_item("plastic", ItemStack("basic_materials:plastic_sheet 1"))
+
+                inv:add_item(
+                    "plastic",
+                    ItemStack("basic_materials:plastic_sheet "..tostring(plastic_refund))
+                )
+
             elseif plastic:get_count() < plastic:get_stack_max() then
-                plastic:set_count(plastic:get_count() + 1)
+
+                if (plastic:get_count() + plastic_refund) > plastic:get_stack_max() then
+                    plastic:set_count(plastic:get_stack_max())
+                else
+                    plastic:set_count(plastic:get_count() + plastic_refund)
+                end
+
                 inv:set_stack("plastic", 1, plastic)
+
             end
+
         end
 
         -- Destroy the recycled item
@@ -300,7 +380,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
     -- In this situation, the list of writeable signs is not updated automatically
     if move_flag then
-        metrosigns.writer.populateoutput(pos)
+        metrosigns.writer.populate_output(pos)
     end
 
     -- Having put the green cartridge in the green slot, don't put the green cartridge in the red
@@ -335,25 +415,48 @@ function metrosigns.writer.on_construct(pos)
     inv:set_size("plastic", 1)
     inv:set_size("recycle", 1)
 
-    metrosigns.writer.populateoutput(pos)
+    metrosigns.writer.populate_output(pos)
 
 end
 
 function metrosigns.writer.on_metadata_inventory_put(pos)
 
-    metrosigns.writer.populateoutput(pos)
+    metrosigns.writer.populate_output(pos)
 
 end
 
-function metrosigns.writer.on_metadata_inventory_take(pos, listname, index)
+--function metrosigns.writer.on_metadata_inventory_take(pos, listname, index)
+function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stack, player)
+
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local input_stack = inv:get_stack(listname,  index)
 
     if listname == "output" then
+
         local cost
             = metrosigns.writer.signtypes[metrosigns.writer.current_category][index].ink_needed
         metrosigns.writer.nom(pos, cost)
+
+        -- (Change by Guill4um - when moving signs onto a slot that's not empty, the inventory item
+        --      occupying that slot is erased. This fixes the problem. Credit to
+        --      moreblocks:cnc code)
+        if not input_stack:is_empty() and input_stack:get_name()~=stack:get_name() then
+
+            local player_inv = player:get_inventory()
+            if player_inv:room_for_item("main", input_stack) then
+                -- If there is room in the player's inventory, the item is moved
+                player_inv:add_item("main", input_stack)
+            else
+                -- if there is no room, the item is dropped
+                minetest.item_drop(input_stack, player, pos)
+            end
+
+        end
+
     end
 
-    metrosigns.writer.populateoutput(pos)
+    metrosigns.writer.populate_output(pos)
 
 end
 
@@ -398,7 +501,7 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
     end
 
     -- In all cases, redraw the list of signs for the current category
-    metrosigns.writer.populateoutput(pos)
+    metrosigns.writer.populate_output(pos)
 
 end
 

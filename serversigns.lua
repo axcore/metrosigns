@@ -45,11 +45,11 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
     add_sign(server, server_descrip, "s4", "Coram Line", 1, 1)
     add_sign(server, server_descrip, "s5", "Thorviss Line", 1, 1)
     add_sign(server, server_descrip, "s6", "Recursive Dragon", 1, 1)
-    add_sign(server, server_descrip, "s8", "Tiny Line", 1, 1)          
-    add_sign(server, server_descrip, "s13", "Exfactor Line", 2, 1)    
+    add_sign(server, server_descrip, "s8", "Tiny Line", 1, 1)
+    add_sign(server, server_descrip, "s13", "Exfactor Line", 2, 1)
     add_sign(server, server_descrip, "s15", "Beach Line", 2, 1)
     add_sign(server, server_descrip, "r1", "Narsh Express", 1, 1)
-    add_sign(server, server_descrip, "r2", "Crystal Line", 1, 1)        
+    add_sign(server, server_descrip, "r2", "Crystal Line", 1, 1)
     add_sign(server, server_descrip, "t1", "Tommy's Line", 1, 1)
     add_sign(server, server_descrip, "t2", "Subway", 1, 1)
     -- GS Metro
@@ -76,11 +76,11 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["s4"] = "Coram Line",
             ["s5"] = "Thorviss Line",
             ["s6"] = "Recursive Dragon",
-            ["s8"] = "Tiny Line",           
-            ["s13"] = "Exfactor Line",      
+            ["s8"] = "Tiny Line",
+            ["s13"] = "Exfactor Line",
             ["s15"] = "Beach Line",
             ["r1"] = "Narsh Express",
-            ["r2"] = "Crystal Line",        
+            ["r2"] = "Crystal Line",
             ["t1"] = "Tommy's Line",
             ["t2"] = "Subway",
             -- GS Metro (lines 1-3, 4A, 5A, 6-7, 8A use the same colours as above)
@@ -92,6 +92,31 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["line"] = "Line",
             ["station"] = "Station",
             ["istation"] = "Interchange",
+        }
+    )
+
+    add_map(
+        server,
+        server_descrip,
+        {
+            ["s1"] = "Abyssal Express",
+            ["s2"] = "Fractal Plains",
+--          ["s3"] = "Erosion Trap",
+            ["s4"] = "Coram Line",
+            ["s5"] = "Thorviss Line",
+--          ["s6"] = "Recursive Dragon",
+--          ["s8"] = "Tiny Line",
+--          ["s13"] = "Exfactor Line",
+--          ["s15"] = "Beach Line",
+--          ["r1"] = "Narsh Express",
+            ["r2"] = "Crystal Line",
+--          ["t1"] = "Tommy's Line",
+            ["t2"] = "Subway",
+--          ["gsm4b"] = "GSM Line 4B",
+--          ["gsm5b"] = "GSM Line 5B",
+--          ["gsm8b"] = "GSM Line 8B",
+        },
+        {
             ["sstation"] = "Spawn Interchange",
         }
     )
