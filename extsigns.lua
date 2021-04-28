@@ -70,6 +70,8 @@ if line_flag or platform_flag then
                     paramtype = "light",
                     paramtype2 = "wallmounted",
                     sunlight_propagates = true,
+                    -- Fix for minetest 5.4
+                    use_texture_alpha = "clip",                    
                     walkable = false
                 })
                 metrosigns.register_sign(
@@ -108,6 +110,8 @@ if line_flag or platform_flag then
                     },
                     paramtype = "light",
                     paramtype2 = "facedir",
+                    -- Fix for minetest 5.4
+                    use_texture_alpha = "clip",
                     walkable = false
                 })
                 metrosigns.register_sign(

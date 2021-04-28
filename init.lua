@@ -38,7 +38,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 28
+metrosigns.ver_min = 29
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
