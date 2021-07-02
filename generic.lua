@@ -28,6 +28,7 @@ function add_lightbox(city, city_descrip)
             "metrosigns_box_"..city.."_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(city_descrip, "metrosigns:box_"..city, metrosigns.writer.box_units)
@@ -61,12 +62,13 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
     minetest.register_node(node, {
         description = cap_city.." Line "..line_descrip.." sign",
         tiles = {"metrosigns_sign_"..city.."_line_"..line..".png"},
-        inventory_image = "metrosigns_sign_"..city.."_line_"..line.."_inv.png",
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
-        light_source = 12,
+
         drawtype = "nodebox",
+        inventory_image = "metrosigns_sign_"..city.."_line_"..line.."_inv.png",
         is_ground_content = false,
         legacy_wallmounted = true,
+        light_source = 12,
         node_box = {
             type = "wallmounted",
             wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -78,6 +80,7 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
         paramtype = "light",
         paramtype2 = "wallmounted",
         sunlight_propagates = true,
+        use_texture_alpha = "clip",
         walkable = false
     })
     metrosigns.register_sign(city_descrip, node, metrosigns.writer.sign_units)
@@ -105,12 +108,13 @@ function add_sign_special(city, city_descrip, route, route_descrip)
     minetest.register_node(node, {
         description = cap_city.." Route "..route_descrip.." sign",
         tiles = {"metrosigns_sign_"..city.."_route_"..route..".png"},
-        inventory_image = "metrosigns_sign_"..city.."_route_"..route.."_inv.png",
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
-        light_source = 12,
+
         drawtype = "nodebox",
+        inventory_image = "metrosigns_sign_"..city.."_route_"..route.."_inv.png",
         is_ground_content = false,
         legacy_wallmounted = true,
+        light_source = 12,
         node_box = {
             type = "wallmounted",
             wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -120,6 +124,7 @@ function add_sign_special(city, city_descrip, route, route_descrip)
         paramtype = "light",
         paramtype2 = "wallmounted",
         sunlight_propagates = true,
+        use_texture_alpha = "clip",
         walkable = false
     })
     metrosigns.register_sign(city_descrip, node, metrosigns.writer.sign_units)
@@ -161,27 +166,32 @@ function add_map_unit(
 
     cap_city = capitalise(city)
     if terminus == "" then
+
         node = "metrosigns:map_"..city.."_"..line.."_"..unit
         description = cap_city.." "..line_descrip.. " "..unit_descrip.." sign"
         img = "metrosigns_map_"..city.."_"..line.."_"..unit..".png"
+
     else
+
         node = "metrosigns:map_"..city.."_"..line.."_"..unit.."_"..terminus
-        description = cap_city.." "..line_descrip.. " "..unit_descrip.." sign ("
-            ..terminus_descrip..")"
-        img = "metrosigns_map_"..city.."_"..line.."_"..unit..".png^metrosigns_map_"..city.."_"
-            ..terminus..".png"
+        description = cap_city.." "..line_descrip.. " "..unit_descrip.." sign ("..
+                terminus_descrip..")"
+        img = "metrosigns_map_"..city.."_"..line.."_"..unit..".png^metrosigns_map_"..city.."_"..
+                terminus..".png"
+
     end
 
     minetest.register_node(node, {
         description = description,
         -- Reverse the back image, so map signs can be viewed from the front or back
         tiles = {img, img, img, img, img.."^[transform4", img},
-        inventory_image = img,
         groups = {cracky = 3},
-        light_source = 5,
+
         drawtype = "nodebox",
+        inventory_image = img,
         is_ground_content = false,
         legacy_wallmounted = true,
+        light_source = 5,
         node_box = {
             type = "fixed",
             fixed = {
@@ -190,6 +200,7 @@ function add_map_unit(
         },
         paramtype = "light",
         paramtype2 = "facedir",
+        use_texture_alpha = "clip",
         walkable = false
     })
     metrosigns.register_sign(city_descrip, node, metrosigns.writer.map_units)
@@ -211,9 +222,12 @@ function add_map(city, city_descrip, line_table, type_table)
     --          with no station, and so on
 
     for line, line_descrip in pairs(line_table) do
+
         for unit, unit_descrip in pairs(type_table) do
+
             add_map_unit(city, city_descrip, line, line_descrip, unit, unit_descrip, "", "")
             if unit == "cstation" then
+
                 add_map_unit(
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "termlc", "left terminus"
@@ -222,7 +236,9 @@ function add_map(city, city_descrip, line_table, type_table)
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "termrc", "right terminus"
                 )
+
             elseif string.find(unit, "station") then
+
                 add_map_unit(
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "terml", "left terminus"
@@ -231,8 +247,11 @@ function add_map(city, city_descrip, line_table, type_table)
                     city, city_descrip, line, line_descrip, unit, unit_descrip,
                     "termr", "right terminus"
                 )
+
             end
+
         end
+
     end
 
 end

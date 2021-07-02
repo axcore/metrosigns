@@ -38,7 +38,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 29
+metrosigns.ver_min = 30
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -131,17 +131,18 @@ metrosigns.writer.signcounts = {}
 ---------------------------------------------------------------------------------------------------
 
 -- Load settings from Minetest's main menu
-metrosigns.create_all_flag = minetest.settings:get("metrosigns_create_all") or false
+metrosigns.create_all_flag = minetest.settings:get("metrosigns_create_all") or true
 
-metrosigns.create_subwayblocks_flag = minetest.settings:get("metrosigns_create_subwayblocks")
-or false
+metrosigns.create_subwayblocks_flag =
+        minetest.settings:get("metrosigns_create_subwayblocks") or false
 metrosigns.create_trainblocks_flag = minetest.settings:get("metrosigns_create_trainblocks") or false
 
 metrosigns.create_ext_line_flag = minetest.settings:get("metrosigns_create_ext_line") or true
 metrosigns.ext_line_min = minetest.settings:get("metrosigns_ext_line_min") or 11
 metrosigns.ext_line_max = minetest.settings:get("metrosigns_ext_line_min") or 20
 
-metrosigns.create_ext_platform_flag = minetest.settings:get("metrosigns_create_ext_platform") or true
+metrosigns.create_ext_platform_flag =
+        minetest.settings:get("metrosigns_create_ext_platform") or true
 metrosigns.ext_platform_min = minetest.settings:get("metrosigns_ext_platform_min") or 11
 metrosigns.ext_platform_max = minetest.settings:get("metrosigns_ext_platform_min") or 20
 

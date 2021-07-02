@@ -36,11 +36,11 @@ function metrosigns.writer.check_supplies(pos)
     end
 
     local redcart_good = redcart:to_table().name == "metrosigns:cartridge_red"
-        and redcart:to_table().wear < metrosigns.writer.cartridge_max
+            and redcart:to_table().wear < metrosigns.writer.cartridge_max
     local greencart_good = greencart:to_table().name == "metrosigns:cartridge_green"
-        and greencart:to_table().wear < metrosigns.writer.cartridge_max
+            and greencart:to_table().wear < metrosigns.writer.cartridge_max
     local bluecart_good = bluecart:to_table().name == "metrosigns:cartridge_blue"
-        and bluecart:to_table().wear < metrosigns.writer.cartridge_max
+            and bluecart:to_table().wear < metrosigns.writer.cartridge_max
     local plastic_good = plastic:to_table().name == "basic_materials:plastic_sheet"
     local good = redcart_good and greencart_good and bluecart_good and plastic_good
 
@@ -214,12 +214,14 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     if listname == "redcart" and stack_name == "dye:red" then
 
         if redcart:get_name() == "metrosigns:cartridge_red" then
+
             redcart:set_wear(0)
             inv:set_stack("redcart", 1, redcart)
             stack:set_count(2)
             player_inv:remove_item("main", stack)
             stack:set_count(0)
             metrosigns.writer.populate_output(pos)
+
         end
 
         return 0
@@ -227,12 +229,14 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     elseif listname == "greencart" and stack_name == "dye:green" then
 
         if greencart:get_name() == "metrosigns:cartridge_green" then
+
             greencart:set_wear(0)
             inv:set_stack("greencart",1,greencart)
             stack:set_count(2)
             player_inv:remove_item("main", stack)
             stack:set_count(0)
             metrosigns.writer.populate_output(pos)
+
         end
 
         return 0
@@ -240,12 +244,14 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     elseif listname == "bluecart" and stack_name == "dye:blue" then
 
         if bluecart:get_name() == "metrosigns:cartridge_blue" then
+
             bluecart:set_wear(0)
             inv:set_stack("bluecart",1,bluecart)
             stack:set_count(2)
             player_inv:remove_item("main", stack)
             stack:set_count(0)
             metrosigns.writer.populate_output(pos)
+
         end
 
         return 0
@@ -263,43 +269,49 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     end
 
     -- Cannot rely on the listring to put the right type of cartridge into the right slot;
-    --  a green cartridge would be put into the red cartridge slot
+    --      a green cartridge would be put into the red cartridge slot
     -- The workaround is to move the green cartridge into the green slot directly
     if stack_name == "metrosigns:cartridge_green" and inv:is_empty("greencart") then
 
         if player_inv:remove_item("main", stack) then
+
             inv:add_item("greencart", stack)
             move_flag = true
+
         end
 
     elseif stack_name == "metrosigns:cartridge_blue" and inv:is_empty("bluecart") then
 
         if player_inv:remove_item("main", stack) then
+
             inv:add_item("bluecart", stack)
             move_flag = true
+
         end
 
     elseif stack_name == "basic_materials:plastic_sheet" and inv:is_empty("plastic") then
 
         if player_inv:remove_item("main", stack) then
+
             inv:add_item("plastic", stack)
             move_flag = true
+
         end
 
     end
 
     -- All metrosigns nodes (except lightboxes and the sign writer itself) can be recycled
     -- For each compatible node added to the recycling slot, the player has a 66% chance of
-    --  receiving some plastic. In addition, they receive between 50-100% of the ink consumed in
-    --  crafting the node
-    if listname == "recycle"
-    and string.find(stack_name, "metrosigns")
-    and not string.find(stack_name, "writer")
-    and not string.find(stack_name, "cartridge")
-    and (string.find(stack_name, "sign") or string.find(stack_name, "map")) then
+    --      receiving some plastic. In addition, they receive between 50-100% of the ink consumed in
+    --      crafting the node
+    if listname == "recycle" and
+            string.find(stack_name, "metrosigns") and
+            not string.find(stack_name, "writer") and
+            not string.find(stack_name, "cartridge") and
+            (string.find(stack_name, "sign") or string.find(stack_name, "map")) then
 
         -- Decide how much ink to recover from the recycling process, and restore it to the
-        --  cartridges
+        --      cartridges
         -- THe player never receives the full amount
         if string.find(stack_name, "metrosigns:sign") then
             ink_refund = math.random(1, (metrosigns.writer.sign_units - 1))
@@ -312,6 +324,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         ink_refund = ink_refund * metrosigns.writer.cartridge_min * stack_count
 
         if not inv:is_empty("redcart") then
+
             if redcart:get_wear() < ink_refund then
                 redcart:set_wear(0)
             else
@@ -319,9 +332,11 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
             end
 
             inv:set_stack("redcart", 1, redcart)
+
         end
 
         if not inv:is_empty("greencart") then
+
             if greencart:get_wear() < ink_refund then
                 greencart:set_wear(0)
             else
@@ -329,9 +344,11 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
             end
 
             inv:set_stack("greencart", 1, greencart)
+
         end
 
         if not inv:is_empty("bluecart") then
+
             if bluecart:get_wear() < ink_refund then
                 bluecart:set_wear(0)
             else
@@ -339,6 +356,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
             end
 
             inv:set_stack("bluecart", 1, bluecart)
+
         end
 
         -- Randomly restore a plastic sheet
@@ -435,7 +453,7 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
     if listname == "output" then
 
         local cost
-            = metrosigns.writer.signtypes[metrosigns.writer.current_category][index].ink_needed
+                = metrosigns.writer.signtypes[metrosigns.writer.current_category][index].ink_needed
         metrosigns.writer.nom(pos, cost)
 
         -- (Change by Guill4um - when moving signs onto a slot that's not empty, the inventory item
@@ -445,11 +463,15 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
 
             local player_inv = player:get_inventory()
             if player_inv:room_for_item("main", input_stack) then
+
                 -- If there is room in the player's inventory, the item is moved
                 player_inv:add_item("main", input_stack)
+
             else
+
                 -- if there is no room, the item is dropped
                 minetest.item_drop(input_stack, player, pos)
+
             end
 
         end
@@ -494,8 +516,10 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
 
         -- User has activated the dropdown box
         if metrosigns.writer.signtypes[fields.category] ~= nil then
+
             metrosigns.writer.current_category = fields.category
-            meta:set_int("page",1)
+            meta:set_int("page", 1)
+
         end
 
     end
@@ -570,20 +594,20 @@ if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
 
     -- Refills
     minetest.register_craft({
-        output = "metrosigns:cartridge_red",
         type = "shapeless",
+        output = "metrosigns:cartridge_red",
         recipe = {"metrosigns:cartridge_red", "dye:red"}
     })
 
     minetest.register_craft({
-        output = "metrosigns:cartridge_green",
         type = "shapeless",
+        output = "metrosigns:cartridge_green",
         recipe = {"metrosigns:cartridge_green", "dye:green"}
     })
 
     minetest.register_craft({
-        output = "metrosigns:cartridge_blue",
         type = "shapeless",
+        output = "metrosigns:cartridge_blue",
         recipe = {"metrosigns:cartridge_blue", "dye:blue"}
     })
 
@@ -613,9 +637,11 @@ minetest.register_node("metrosigns:sign_writer", {
         "metrosigns_writer_front.png",
     },
     groups = {cracky = 2},
+
     paramtype = "light",
     paramtype2 = "facedir",
     walkable = true,
+
     -- Callbacks
     allow_metadata_inventory_move = metrosigns.writer.allow_metadata_inventory_move,
     allow_metadata_inventory_put = metrosigns.writer.allow_metadata_inventory_put,

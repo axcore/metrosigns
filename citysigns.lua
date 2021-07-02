@@ -314,12 +314,13 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
             minetest.register_node(node, {
                 description = city_descrip.." "..line_descrip.." "..unit_descrip.." sign",
                 tiles = {img, img, img, img, img.."^[transform4", img},
-                inventory_image = img,
                 groups = {cracky = 3},
-                light_source = 5,
+
                 drawtype = "nodebox",
+                inventory_image = img,
                 is_ground_content = false,
                 legacy_wallmounted = true,
+                light_source = 5,
                 node_box = {
                     type = "fixed",
                     fixed = {
@@ -667,16 +668,20 @@ if metrosigns.create_all_flag or metrosigns.create_prague_flag then
     -- Interchanges contain colours from both lines
 
     for line, cap_line in pairs(line_table) do
+
         for line2, cap_line2 in pairs(line_table) do
 
             if line ~= line2 then
+
                 add_map_unit(
                     city, city_descrip, line, cap_line, line2.."station", "Interchange "
                         ..cap_line.."-"..cap_line2, "", ""
                 )
+
             end
 
         end
+
     end
 
 end
@@ -771,6 +776,7 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
     }
 
     for route, colour in pairs(terminus_table) do
+
         for side, side_descrip in pairs(side_table) do
 
             local node = "metrosigns:map_"..city.."_"..route.."_station_term"..side
@@ -780,12 +786,13 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
             minetest.register_node(node, {
                 description = cap_city.." "..route.. " station sign ("..side_descrip.." terminus)",
                 tiles = {img, img, img, img, img.."^[transform4", img},
-                inventory_image = img,
                 groups = {cracky = 3},
-                light_source = 5,
+
                 drawtype = "nodebox",
+                inventory_image = img,
                 is_ground_content = false,
                 legacy_wallmounted = true,
+                light_source = 5,
                 node_box = {
                     type = "fixed",
                     fixed = {
@@ -799,6 +806,7 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
             metrosigns.register_sign(city_descrip, node, metrosigns.writer.map_units)
 
         end
+
     end
 
 end

@@ -7,7 +7,7 @@
 # -------------------------------------------------------------------------------------------------
 
 # If enabled, create all items, regardless of the value of other flag settings
-metrosigns_create_all (Enable to create all items) bool false
+metrosigns_create_all (Enable to create all items) bool true
 
 # -------------------------------------------------------------------------------------------------
 # Settings for items borrowed from other mods

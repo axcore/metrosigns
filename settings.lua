@@ -11,7 +11,7 @@
 -- To override a setting, uncomment the line (by removing the first two characters), and then change
 --      a flag value to true or false, or change an integer value to a number between 1 and 99
 
---metrosigns.create_all_flag = false
+--metrosigns.create_all_flag = true
 
 --metrosigns.create_subwayblocks_flag = false
 --metrosigns.create_trainblocks_flag = false

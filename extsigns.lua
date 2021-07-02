@@ -35,6 +35,7 @@ end
 if line_flag or platform_flag then
 
     for m = 0, 9, 1 do
+
         for n = 0, 9, 1 do
 
             num = (m*10) + n
@@ -49,18 +50,19 @@ if line_flag or platform_flag then
                 minetest.register_node("metrosigns:sign_line_"..m..n, {
                     description = "Line "..num.." sign",
                     tiles = {
-                        "metrosigns_bg_small_"..n..".png^metrosigns_char_small_"..col.."_"..m
-                            .."0.png^metrosigns_char_small_"..col.."_"..n..".png"
+                        "metrosigns_bg_small_"..n..".png^metrosigns_char_small_"..col.."_"..m..
+                                "0.png^metrosigns_char_small_"..col.."_"..n..".png"
                     },
-                    inventory_image = "metrosigns_bg_large_"..n..".png^metrosigns_char_large_"..col
-                        .."_"..m.."0.png^metrosigns_char_large_"..col.."_"..n..".png",
                     groups = {
                         attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3
                     },
-                    light_source = 12,
+
                     drawtype = "nodebox",
+                    inventory_image = "metrosigns_bg_large_"..n..".png^metrosigns_char_large_"..
+                            col.."_"..m.."0.png^metrosigns_char_large_"..col.."_"..n..".png",
                     is_ground_content = false,
                     legacy_wallmounted = true,
+                    light_source = 12,
                     node_box = {
                         type = "wallmounted",
                         wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -71,7 +73,7 @@ if line_flag or platform_flag then
                     paramtype2 = "wallmounted",
                     sunlight_propagates = true,
                     -- Fix for minetest 5.4
-                    use_texture_alpha = "clip",                    
+                    use_texture_alpha = "clip",
                     walkable = false
                 })
                 metrosigns.register_sign(
@@ -85,17 +87,18 @@ if line_flag or platform_flag then
                 minetest.register_node("metrosigns:sign_platform_"..m..n, {
                     description = "Platform "..num.." sign",
                     tiles = {
-                        "metrosigns_bg_small_platform.png^metrosigns_char_small_white_"..m
-                            .."0.png^metrosigns_char_small_white_"..n..".png"
+                        "metrosigns_bg_small_platform.png^metrosigns_char_small_white_"..m..
+                                "0.png^metrosigns_char_small_white_"..n..".png"
                     },
-                    inventory_image
-                        = "metrosigns_bg_large_platform.png^metrosigns_char_large_white_"..m
-                        .."0.png^metrosigns_char_large_white_"..n..".png",
                     groups = {cracky = 3},
-                    light_source = 5,
+
                     drawtype = "nodebox",
+                    inventory_image
+                            = "metrosigns_bg_large_platform.png^metrosigns_char_large_white_"..m..
+                            "0.png^metrosigns_char_large_white_"..n..".png",
                     is_ground_content = false,
                     legacy_wallmounted = true,
+                    light_source = 5,
                     node_box = {
                         type = "wallmounted",
                         wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -121,6 +124,9 @@ if line_flag or platform_flag then
                 )
 
             end
+
         end
+
     end
+
 end

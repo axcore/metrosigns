@@ -13,8 +13,8 @@
 -- Original material from trainblocks by Maxx
 ---------------------------------------------------------------------------------------------------
 
-if not HAVE_TRAINBLOCKS_FLAG
-and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
+if not HAVE_TRAINBLOCKS_FLAG and
+        (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
 
     local category = "Signs from trainblocks mod"
     metrosigns.register_category(category)
@@ -29,11 +29,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_station_text.png",
             "trainblocks_sign_station_text.png",
         },
-        inventory_image = "trainblocks_sign_station_text.png",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_station_text.png",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -55,11 +56,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_station_exit_text.png",
             "trainblocks_sign_station_exit_text.png^[transformFX",
         },
-        inventory_image = "trainblocks_sign_station_exit_text.png^[transformFX",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_station_exit_text.png^[transformFX",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -83,11 +85,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_station_exit_text.png",
             "trainblocks_sign_station_exit_text.png",
         },
-        inventory_image = "trainblocks_sign_station_exit_text.png",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_station_exit_text.png",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -112,6 +115,7 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_box_berlin_ubahn_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(
@@ -128,11 +132,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_berlin_ubahn_exit_text.png",
             "trainblocks_sign_berlin_ubahn_exit_text.png^[transformFX",
         },
-        inventory_image = "trainblocks_sign_berlin_ubahn_exit_text.png^[transformFX",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_berlin_ubahn_exit_text.png^[transformFX",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -156,11 +161,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_berlin_ubahn_exit_text.png",
             "trainblocks_sign_berlin_ubahn_exit_text.png",
         },
-        inventory_image = "trainblocks_sign_berlin_ubahn_exit_text.png",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_berlin_ubahn_exit_text.png",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -185,6 +191,7 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_box_berlin_sbahn_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(
@@ -201,11 +208,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_berlin_sbahn_exit_revtext.png",
             "trainblocks_sign_berlin_sbahn_exit_revtext.png^[transformFX",
         },
-        inventory_image = "trainblocks_sign_berlin_sbahn_exit_revtext.png^[transformFX",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_berlin_sbahn_exit_revtext.png^[transformFX",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -229,11 +237,12 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
             "trainblocks_sign_berlin_sbahn_exit_text.png",
             "trainblocks_sign_berlin_sbahn_exit_text.png",
         },
-        inventory_image = "trainblocks_sign_berlin_sbahn_exit_text.png",
         groups = {cracky = 3},
-        light_source = 6,
+
         drawtype = "nodebox",
+        inventory_image = "trainblocks_sign_berlin_sbahn_exit_text.png",
         is_ground_content = false,
+        light_source = 6,
         node_box = {
             type = "fixed",
             fixed = {
@@ -259,12 +268,13 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
         minetest.register_node("metrosigns:tb_sign_line_"..num, {
             description = "Line "..i.." sign (trainblocks)",
             tiles = {"trainblocks_sign_line_"..i..".png"},
-            inventory_image = "trainblocks_sign_line_"..i.."_inv.png",
             groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
-            light_source = 12,
+
             drawtype = "nodebox",
+            inventory_image = "trainblocks_sign_line_"..i.."_inv.png",
             is_ground_content = false,
             legacy_wallmounted = true,
+            light_source = 12,
             node_box = {
                 type = "wallmounted",
                 wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -283,12 +293,13 @@ and (metrosigns.create_all_flag or metrosigns.create_trainblocks_flag) then
         minetest.register_node("metrosigns:tb_sign_platform_"..num, {
             description = "Platform "..i.." sign (trainblocks)",
             tiles = {"trainblocks_sign_platform_"..i..".png"},
-            inventory_image = "trainblocks_sign_platform_"..i.."_inv.png",
             groups = {cracky = 3},
-            light_source = 5,
+
             drawtype = "nodebox",
+            inventory_image = "trainblocks_sign_platform_"..i.."_inv.png",
             is_ground_content = false,
             legacy_wallmounted = true,
+            light_source = 5,
             node_box = {
                 type = "fixed",
                 fixed = {

@@ -55,11 +55,11 @@ Code and texture contributors: gpcf/orwell, Max, cheapie
 Settings
 --------
 
-Because metrosigns can create so many items, most of them are disabled by default.
+Most items are enabled by default. (This is a change from earlier versions). 
 
-In Minetest's main menu, you can decide which to enable.  Click **Settings > All settings > Mods > metrosigns**. If you really want to enable everything, you can do that by clicking on **Enable to create all items**.
+If you want to de-clutter your inventory, you should decide which to enable, and which to disable. In Minetest's main menu, click **Settings > All settings > Mods > metrosigns**. Click on **Enable to create all items** to de-select it.
 
-Otherwise, disable that option, and enable one or more of the options below it. Most users will prefer to use just London Underground signs, or just Paris Metro signs. Each of the 20 cities has a distinctive style, so enable the one you like best, and disable the others.
+Then, you can enable one or more of the options below it. Most users will prefer to use just London Underground signs, or just Paris Metro signs. Each of the 20 cities has a distinctive style, so enable the one you like best, and disable the others.
 
 Items can be also be enabled/disabled by editing the file **settings.lua**.
 

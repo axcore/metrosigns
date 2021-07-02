@@ -14,7 +14,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
     local category = "Signs with text"
     metrosigns.register_category(category)
 
-    width_table = {
+    local width_table = {
         [1] = "short",
         [2] = "medium",
         [3] = "long",
@@ -30,6 +30,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
                 depth = 2/16,
                 width = width,
                 height = 1,
+
                 entity_fields = {
                     size = { x = width, y = 12/16 },
                     maxlines = 3,
@@ -65,6 +66,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
                 depth = 2/16,
                 width = width,
                 height = 1,
+
                 entity_fields = {
                     size = { x = width, y = 12/16 },
                     maxlines = 3,

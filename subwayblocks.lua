@@ -12,8 +12,8 @@
 -- Original material from advtrains_subwayblocks by gpcf/orwell
 ---------------------------------------------------------------------------------------------------
 
-if not HAVE_SUBWAYBLOCKS_FLAG
-and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
+if not HAVE_SUBWAYBLOCKS_FLAG and
+        (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
 
     local category = "Signs from subwayblocks mod"
     metrosigns.register_category(category)
@@ -29,6 +29,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             "advtrains_subwayblocks_box_berlin_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_berlin", metrosigns.writer.box_units)
@@ -44,6 +45,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             "advtrains_subwayblocks_box_london_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_london", metrosigns.writer.box_units)
@@ -59,6 +61,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             "advtrains_subwayblocks_box_madrid_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_madrid", metrosigns.writer.box_units)
@@ -74,6 +77,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             "advtrains_subwayblocks_box_mountain_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_mountain", metrosigns.writer.box_units)
@@ -89,6 +93,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             "advtrains_subwayblocks_box_paris_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_paris", metrosigns.writer.box_units)
@@ -105,12 +110,13 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
         minetest.register_node("metrosigns:sb_sign_line_"..num, {
             description = "Line "..i.." sign (subwayblocks)",
             tiles = {"advtrains_subwayblocks_sign_line_"..i..".png"},
-            inventory_image = "advtrains_subwayblocks_sign_line_"..i.."_inv.png",
             groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
-            light_source = 12,
+
             drawtype = "nodebox",
+            inventory_image = "advtrains_subwayblocks_sign_line_"..i.."_inv.png",
             is_ground_content = false,
             legacy_wallmounted = true,
+            light_source = 12,
             node_box = {
                 type = "wallmounted",
                 wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
@@ -120,6 +126,7 @@ and (metrosigns.create_all_flag or metrosigns.create_subwayblocks_flag) then
             paramtype = "light",
             paramtype2 = "wallmounted",
             sunlight_propagates = true,
+            use_texture_alpha = "clip",
             walkable = false
         })
         metrosigns.register_sign(

@@ -12,8 +12,8 @@
 
 if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
 
-    server = "tabyss"
-    server_descrip = "Tunnelers' Abyss"
+    local server = "tabyss"
+    local server_descrip = "Tunnelers' Abyss"
 
     metrosigns.register_category(server_descrip)
 
@@ -30,6 +30,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             "metrosigns_box_tabyss_metro_side.png",
         },
         groups = box_groups,
+
         light_source = box_light_source,
     })
     metrosigns.register_sign(
@@ -122,4 +123,3 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
     )
 
 end
-
