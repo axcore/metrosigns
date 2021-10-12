@@ -67,6 +67,8 @@ By default, metrosigns provides its own line and platform signs in the range 11-
 
 The reason for using 11 as the minimum value, and not 1, is that the code copied from `advtrains_subwayblocks <https://git.gpcf.eu/?p=advtrains_subwayblocks.git>`__ and `trainblocks <https://github.com/maxhipp/trainblocks_bc>`__ already provides signs in the range 1-10. Note that those signs are labelled "1", "2", "3"..., whereas the new metrosigns are labelled "01", "02", "03"... (and so on). If you prefer to have two digits on *every* sign, you can change the minimum value to 1.
 
+For line signs in the range 11-99, there are two colour schemes. By default, metrosigns now uses the same colour scheme as the `basic_trains <https://git.bananach.space/basic_trains.git>`__ mod (in which every sign from 1-99 has a unique background colour). Earlier versions of metrosigns used a repeating colour scheme (such that 7, 17 and 77 have the same background colour). If you prefer the original, you can restore it in settings.
+
 How to use
 ----------
 
@@ -108,6 +110,9 @@ More screenshots
 
 .. image:: screenshots/example4.png
   :alt: Various line signs
+
+.. image:: screenshots/example4b.png
+  :alt: Various line signs in a different format
 
 .. image:: screenshots/example5.png
   :alt: Various platform signs

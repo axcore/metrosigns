@@ -7,6 +7,10 @@
 --      https://git.gpcf.eu/?p=advtrains_subwayblocks.git
 --      Licence: GNU Affero GPL
 --
+-- Includes code from basic_trains by gpcf/orwell
+--      https://git.bananach.space/basic_trains.git
+--      Licence: GNU Affero GPL
+--
 -- Includes code/textures from trainblocks by Maxx
 --      https://github.com/maxhipp/trainblocks_bc
 --      https://forum.minetest.net/viewtopic.php?t=19743
@@ -21,7 +25,7 @@
 ---------------------------------------------------------------------------------------------------
 -- Do you want to add signs for a a new city/server? This is how to do it:
 --  1. Add a new flag in the 'Load Settings' section below, e.g.
---          metrosigns.create_mycity_flag
+--          metrosigns.create_barcelona_flag
 --  2. Edit settingtypes.txt to add the same flag there
 --  3. Edit settings.lua to add the same flag there
 --  4. Add a new section to citysigns.lua or serversigns.lua, using the existing code as a template
@@ -29,6 +33,7 @@
 --  6. If a city's name contains more than one word (e.g. "San Francisco", you'll need to edit the
 --          capitalise() function below
 --  7. That's it!
+-- If you're not sure what to do, the authors will be happy to help!
 ---------------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------------
@@ -38,7 +43,7 @@
 metrosigns = {}
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 30
+metrosigns.ver_min = 32
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -140,6 +145,7 @@ metrosigns.create_trainblocks_flag = minetest.settings:get("metrosigns_create_tr
 metrosigns.create_ext_line_flag = minetest.settings:get("metrosigns_create_ext_line") or true
 metrosigns.ext_line_min = minetest.settings:get("metrosigns_ext_line_min") or 11
 metrosigns.ext_line_max = minetest.settings:get("metrosigns_ext_line_min") or 20
+metrosigns.ext_line_bt_cols_flag = minetest.settings:get("metrosigns_ext_line_bt_cols") or true
 
 metrosigns.create_ext_platform_flag =
         minetest.settings:get("metrosigns_create_ext_platform") or true

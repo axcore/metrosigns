@@ -28,6 +28,10 @@ metrosigns_create_ext_line (Enable to create extended line signs, range) bool tr
 #   integers in the range 1-99. If values are invalid, no extended line signs are created)
 metrosigns_ext_line_min (Lowest extended line sign, 1-99) int 11
 metrosigns_ext_line_max (Highest extended line sign, 1-99) int 20
+# For signs in the range 10-99, set the colour scheme to use. If true, use the colour scheme from
+#   basic_trains (every number has a unique colour). If false, use the old metrosigns colour scheme
+#   (the colour depends on the last digit, so 7, 17, and 77 all have the same colour)
+metrosigns_ext_line_bt_cols (Use basic_trains colour scheme for line signs) bool true
 
 # -------------------------------------------------------------------------------------------------
 # Extended platform signs

@@ -258,6 +258,8 @@ if not HAVE_TRAINBLOCKS_FLAG and
 
     for i = 1, 10, 1 do
 
+        local num
+        
         -- (Put signs in the right order in unified_inventory, etc)
         if i < 10 then
             num = "0"..i

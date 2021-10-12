@@ -19,6 +19,7 @@
 --metrosigns.create_ext_line_flag = true
 --metrosigns.ext_line_min = 11
 --metrosigns.ext_line_max = 20
+--metrosigns.ext_line_bt_cols_flag = true
 
 --metrosigns.create_ext_platform_flag = true
 --metrosigns.ext_platform_min = 11

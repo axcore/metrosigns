@@ -8,9 +8,12 @@
 -- Extended line and platform signs
 ---------------------------------------------------------------------------------------------------
 
+local line_flag, line_min, line_max, line_bt_cols_flag, line_category
+
 line_flag = metrosigns.create_all_flag or metrosigns.create_ext_line_flag
-line_min = metrosigns.ext_line_min
-line_max = metrosigns.ext_line_max
+line_min = tonumber(metrosigns.ext_line_min)
+line_max = tonumber(metrosigns.ext_line_max)
+line_bt_cols_flag = metrosigns.ext_line_bt_cols_flag
 if not isint(line_min) or not isint(line_max) or line_min < 0 or line_max > 99 then
     line_flag = false
 end
@@ -20,9 +23,11 @@ if line_flag then
     metrosigns.register_category(line_category)
 end
 
+local platform_flag, platform_min, platform_max, platform_category
+
 platform_flag = metrosigns.create_all_flag or metrosigns.create_ext_platform_flag
-platform_min = metrosigns.ext_platform_min
-platform_max = metrosigns.ext_platform_max
+platform_min = tonumber(metrosigns.ext_platform_min)
+platform_max = tonumber(metrosigns.ext_platform_max)
 if not isint(platform_min) or not isint(platform_max) or platform_min < 0 or platform_max > 99 then
     platform_flag = false
 end
@@ -38,6 +43,8 @@ if line_flag or platform_flag then
 
         for n = 0, 9, 1 do
 
+            local num, col
+            
             num = (m*10) + n
             if n == 6 then
                 col = "black"
@@ -47,19 +54,55 @@ if line_flag or platform_flag then
 
             if num >= line_min and num <= line_max then
 
+                local tex, inv
+
+                -- Line signs in the range 11-99 might use either of two colour schemes
+                if (not line_bt_cols_flag) or num < 11 then
+
+                    -- Old metrosigns colour scheme
+                    tex = "metrosigns_bg_small_"..n..".png^metrosigns_char_small_"..col.."_"..m..
+                            "0.png^metrosigns_char_small_"..col.."_"..n..".png"
+                    inv = "metrosigns_bg_large_"..n..".png^metrosigns_char_large_"..
+                            col.."_"..m.."0.png^metrosigns_char_large_"..col.."_"..n..".png"
+
+                else
+
+                    -- Colour scheme from basic_trains
+					local red = math.fmod(num*67+101, 255)
+					local green = math.fmod(num*97+109, 255)
+					local blue = math.fmod(num*73+127, 255)
+
+					if red + green + blue > 512 then
+                        col = "black"
+                    else
+                        col = "white"
+                    end
+
+                    local colourise = string.format(
+                        "^[colorize:#%X%X%X%X%X%X",
+                        math.floor(red/16), math.fmod(red, 16), math.floor(green/16),
+                        math.fmod(green, 16), math.floor(blue/16), math.fmod(blue, 16)
+                    )
+                    
+                    tex = "(metrosigns_bg_small_x.png"..colourise..")"..
+                            "^metrosigns_char_small_"..col.."_"..m..
+                            "0.png^metrosigns_char_small_"..col.."_"..n..".png"
+                            
+                    inv = "(metrosigns_bg_large_x.png"..colourise..")"..
+                            "^metrosigns_char_large_"..col.."_"..m..
+                            "0.png^metrosigns_char_large_"..col.."_"..n..".png"
+                    
+                end
+
                 minetest.register_node("metrosigns:sign_line_"..m..n, {
                     description = "Line "..num.." sign",
-                    tiles = {
-                        "metrosigns_bg_small_"..n..".png^metrosigns_char_small_"..col.."_"..m..
-                                "0.png^metrosigns_char_small_"..col.."_"..n..".png"
-                    },
+                    tiles = {tex},
                     groups = {
                         attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3
                     },
 
                     drawtype = "nodebox",
-                    inventory_image = "metrosigns_bg_large_"..n..".png^metrosigns_char_large_"..
-                            col.."_"..m.."0.png^metrosigns_char_large_"..col.."_"..n..".png",
+                    inventory_image = inv,
                     is_ground_content = false,
                     legacy_wallmounted = true,
                     light_source = 12,

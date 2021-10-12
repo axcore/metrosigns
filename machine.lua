@@ -411,6 +411,7 @@ function metrosigns.writer.can_dig(pos)
 
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
+    
     return (
         inv:is_empty("redcart") and inv:is_empty("greencart")
         and inv:is_empty("bluecart") and inv:is_empty("plastic")
