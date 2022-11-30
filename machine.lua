@@ -30,17 +30,19 @@ function metrosigns.writer.check_supplies(pos)
     local bluecart = inv:get_stack("bluecart", 1)
     local plastic = inv:get_stack("plastic", 1)
 
-    if not redcart:to_table() or not greencart:to_table() or not bluecart:to_table()
-    or not plastic:to_table() then
+    if not redcart:to_table() or
+            not greencart:to_table() or
+            not bluecart:to_table() or
+            not plastic:to_table() then
         return false
     end
 
-    local redcart_good = redcart:to_table().name == "metrosigns:cartridge_red"
-            and redcart:to_table().wear < metrosigns.writer.cartridge_max
-    local greencart_good = greencart:to_table().name == "metrosigns:cartridge_green"
-            and greencart:to_table().wear < metrosigns.writer.cartridge_max
-    local bluecart_good = bluecart:to_table().name == "metrosigns:cartridge_blue"
-            and bluecart:to_table().wear < metrosigns.writer.cartridge_max
+    local redcart_good = redcart:to_table().name == "metrosigns:cartridge_red" and
+            redcart:to_table().wear < metrosigns.writer.cartridge_max
+    local greencart_good = greencart:to_table().name == "metrosigns:cartridge_green" and
+            greencart:to_table().wear < metrosigns.writer.cartridge_max
+    local bluecart_good = bluecart:to_table().name == "metrosigns:cartridge_blue" and
+            bluecart:to_table().wear < metrosigns.writer.cartridge_max
     local plastic_good = plastic:to_table().name == "basic_materials:plastic_sheet"
     local good = redcart_good and greencart_good and bluecart_good and plastic_good
 
@@ -65,9 +67,9 @@ function metrosigns.writer.nom(pos, amount)
     local bluecart = inv:get_stack("bluecart", 1)
     local plastic = inv:get_stack("plastic", 1)
 
-    redcart:add_wear(amount * metrosigns.writer.cartridge_min )
-    greencart:add_wear(amount * metrosigns.writer.cartridge_min )
-    bluecart:add_wear(amount * metrosigns.writer.cartridge_min )
+    redcart:add_wear(amount * metrosigns.writer.cartridge_min)
+    greencart:add_wear(amount * metrosigns.writer.cartridge_min)
+    bluecart:add_wear(amount * metrosigns.writer.cartridge_min)
     plastic:take_item(1)
 
     inv:set_stack("redcart", 1, redcart)
@@ -88,7 +90,7 @@ function metrosigns.writer.populate_output(pos)
     end
 
     local typescount = metrosigns.writer.signcounts[metrosigns.writer.current_category]
-    local pagesize = 8*5
+    local pagesize = 8 * 5
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     local page = meta:get_int("page")
@@ -119,7 +121,7 @@ function metrosigns.writer.populate_output(pos)
         if k == 1 then
             dropdown_string = v
         else
-            dropdown_string = dropdown_string..","..v
+            dropdown_string = dropdown_string .. "," .. v
         end
 
         -- This fixes an issue in the parent roads mod, in which the dropdown box used to
@@ -130,47 +132,48 @@ function metrosigns.writer.populate_output(pos)
 
     end
 
-    meta:set_string("formspec", "size[11,10]"..
+    meta:set_string("formspec", "size[11,10]" ..
         -- Cartridges
-        "label[0,0;Red\nCartridge]"..
-        "list[current_name;redcart;1.5,0;1,1;]"..
-        "label[0,1;Green\nCartridge]"..
-        "list[current_name;greencart;1.5,1;1,1;]"..
-        "label[0,2;Blue\nCartridge]"..
-        "list[current_name;bluecart;1.5,2;1,1;]"..
+        "label[0,0;Red\nCartridge]" ..
+        "list[current_name;redcart;1.5,0;1,1;]" ..
+        "label[0,1;Green\nCartridge]" ..
+        "list[current_name;greencart;1.5,1;1,1;]" ..
+        "label[0,2;Blue\nCartridge]" ..
+        "list[current_name;bluecart;1.5,2;1,1;]" ..
         -- Plastic
-        "label[0,3;Plastic\nSheet]"..
-        "list[current_name;plastic;1.5,3;1,1;]"..
+        "label[0,3;Plastic\nSheet]" ..
+        "list[current_name;plastic;1.5,3;1,1;]" ..
         -- Recycling
-        "label[0,4;Recycling\nSlot]"..
-        "list[current_name;recycle;1.5,4;1,1;]"..
+        "label[0,4;Recycling\nSlot]" ..
+        "list[current_name;recycle;1.5,4;1,1;]" ..
         -- Sign categories
-        "label[0,5;Sign\nCategory]"..
-        "dropdown[1.5,5;3.75,1;category;"..dropdown_string..";"..tostring(dropdown_index).."]"..
+        "label[0,5;Sign\nCategory]" ..
+        "dropdown[1.5,5;3.75,1;category;" .. dropdown_string .. ";" .. tostring(dropdown_index) ..
+                "]" ..
         -- List of signs
-        "list[current_name;output;2.8,0;8,5;"..tostring((page-1)*pagesize).."]"..
+        "list[current_name;output;2.8,0;8,5;" .. tostring((page - 1) * pagesize) .. "]" ..
         -- Player inventory
-        "list[current_player;main;1.5,6.25;8,4;]"..
+        "list[current_player;main;1.5,6.25;8,4;]" ..
         -- (Change by Guill4um - allow printing the signs with SHIFT + click, as well as by
         --      dragging them from one inventory to another. Reverted because it breaks the code
         --      below, which allows cartridges to be added to their slots with a SHIFT + click
         --      (and also because it should require a bit of effort, so that the user doesn't
         --      accidentally waste ink/plastic)
---       "listring[]"..
+--       "listring[]" ..
         -- Page buttons
-        "button[5.5,5;1,1;prevpage;<<<]"..
-        "button[8.5,5;1,1;nextpage;>>>]"..
-        "label[6.75,5.25;Page "..page.." of "..maxpage.."]"..
+        "button[5.5,5;1,1;prevpage;<<<]" ..
+        "button[8.5,5;1,1;nextpage;>>>]" ..
+        "label[6.75,5.25;Page " .. page .. " of " .. maxpage .. "]" ..
         -- List rings
-        "listring[current_player;main]"..
-        "listring[current_name;redcart]"..
-        "listring[current_player;main]"..
-        "listring[current_name;greencart]"..
-        "listring[current_player;main]"..
-        "listring[current_name;bluecart]"..
-        "listring[current_player;main]"..
-        "listring[current_name;plastic]"..
-        "listring[current_player;main]"..
+        "listring[current_player;main]" ..
+        "listring[current_name;redcart]" ..
+        "listring[current_player;main]" ..
+        "listring[current_name;greencart]" ..
+        "listring[current_player;main]" ..
+        "listring[current_name;bluecart]" ..
+        "listring[current_player;main]" ..
+        "listring[current_name;plastic]" ..
+        "listring[current_player;main]" ..
         "listring[current_name;recycle]"
     )
     meta:set_int("maxpage",maxpage)
@@ -231,7 +234,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         if greencart:get_name() == "metrosigns:cartridge_green" then
 
             greencart:set_wear(0)
-            inv:set_stack("greencart",1,greencart)
+            inv:set_stack("greencart", 1, greencart)
             stack:set_count(2)
             player_inv:remove_item("main", stack)
             stack:set_count(0)
@@ -246,7 +249,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         if bluecart:get_name() == "metrosigns:cartridge_blue" then
 
             bluecart:set_wear(0)
-            inv:set_stack("bluecart",1,bluecart)
+            inv:set_stack("bluecart", 1, bluecart)
             stack:set_count(2)
             player_inv:remove_item("main", stack)
             stack:set_count(0)
@@ -268,8 +271,8 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
     end
 
-    -- Cannot rely on the listring to put the right type of cartridge into the right slot;
-    --      a green cartridge would be put into the red cartridge slot
+    -- Cannot rely on the listring to put the right type of cartridge into the right slot; a green
+    --      cartridge would be put into the red cartridge slot
     -- The workaround is to move the green cartridge into the green slot directly
     if stack_name == "metrosigns:cartridge_green" and inv:is_empty("greencart") then
 
@@ -373,7 +376,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
                 inv:add_item(
                     "plastic",
-                    ItemStack("basic_materials:plastic_sheet "..tostring(plastic_refund))
+                    ItemStack("basic_materials:plastic_sheet " .. tostring(plastic_refund))
                 )
 
             elseif plastic:get_count() < plastic:get_stack_max() then
@@ -413,9 +416,11 @@ function metrosigns.writer.can_dig(pos)
     local inv = meta:get_inventory()
     
     return (
-        inv:is_empty("redcart") and inv:is_empty("greencart")
-        and inv:is_empty("bluecart") and inv:is_empty("plastic")
-        and inv:is_empty("recycle")
+        inv:is_empty("redcart") and
+                inv:is_empty("greencart") and
+                inv:is_empty("bluecart") and
+                inv:is_empty("plastic") and
+                inv:is_empty("recycle")
     )
 
 end
@@ -444,7 +449,6 @@ function metrosigns.writer.on_metadata_inventory_put(pos)
 
 end
 
---function metrosigns.writer.on_metadata_inventory_take(pos, listname, index)
 function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stack, player)
 
     local meta = minetest.get_meta(pos)
@@ -453,14 +457,14 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
 
     if listname == "output" then
 
-        local cost
-                = metrosigns.writer.signtypes[metrosigns.writer.current_category][index].ink_needed
+        local cost =
+                metrosigns.writer.signtypes[metrosigns.writer.current_category][index].ink_needed
         metrosigns.writer.nom(pos, cost)
 
         -- (Change by Guill4um - when moving signs onto a slot that's not empty, the inventory item
         --      occupying that slot is erased. This fixes the problem. Credit to
         --      moreblocks:cnc code)
-        if not input_stack:is_empty() and input_stack:get_name()~=stack:get_name() then
+        if not input_stack:is_empty() and input_stack:get_name() ~= stack:get_name() then
 
             local player_inv = player:get_inventory()
             if player_inv:room_for_item("main", input_stack) then
@@ -502,6 +506,7 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
         if page < 1 then
             page = maxpage
         end
+        
         meta:set_int("page",page)
 
     elseif fields.nextpage then
@@ -511,6 +516,7 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
         if page > maxpage then
             page = 1
         end
+        
         meta:set_int("page",page)
 
     elseif fields.category then

@@ -59,13 +59,20 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
     add_sign(server, server_descrip, "gsm3", "GSM Line 3", 3, 3)
     add_sign(server, server_descrip, "gsm4a", "GSM Line 4A", 3, 3)
     add_sign(server, server_descrip, "gsm4b", "GSM Line 4B", 3, 3)
+    add_sign(server, server_descrip, "gsm4b", "GSM Line 4C", 3, 3) 
+    add_sign(server, server_descrip, "gsm4b", "GSM Line 4D", 3, 3) 
     add_sign(server, server_descrip, "gsm5a", "GSM Line 5A", 3, 3)
     add_sign(server, server_descrip, "gsm5b", "GSM Line 5B", 3, 3)
+    add_sign(server, server_descrip, "gsm4b", "GSM Line 5C", 3, 3) 
     add_sign(server, server_descrip, "gsm6", "GSM Line 6", 3, 3)
     add_sign(server, server_descrip, "gsm7", "GSM Line 7", 3, 3)
     add_sign(server, server_descrip, "gsm8a", "GSM Line 8A", 3, 3)
     add_sign(server, server_descrip, "gsm8b", "GSM Line 8B", 3, 3)
-
+    add_sign(server, server_descrip, "gsm4b", "GSM Line 9A", 3, 3) 
+    add_sign(server, server_descrip, "gsm4b", "GSM Line 9B", 3, 3) 
+    add_sign(server, server_descrip, "gsm4b", "GSM Line E1", 3, 3) 
+    add_sign(server, server_descrip, "gsmrl", "GSMRL Corporate Logo", 3, 3) 
+    
     add_map(
         server,
         server_descrip,
@@ -84,10 +91,12 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["r2"] = "Crystal Line",
             ["t1"] = "Tommy's Line",
             ["t2"] = "Subway",
-            -- GS Metro (lines 1-3, 4A, 5A, 6-7, 8A use the same colours as above)
+            -- GS Metro (other lines use the same colours as above)
             ["gsm4b"] = "GSM Line 4B",
             ["gsm5b"] = "GSM Line 5B",
             ["gsm8b"] = "GSM Line 8B",
+            ["gsm9a"] = "GSM Line 9A",  
+            ["gsme1"] = "GSM Line E1",                        
         },
         {
             ["line"] = "Line",
@@ -121,5 +130,5 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
             ["sstation"] = "Spawn Interchange",
         }
     )
-
+    
 end

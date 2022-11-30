@@ -41,9 +41,10 @@
 ---------------------------------------------------------------------------------------------------
 
 metrosigns = {}
+
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 32
+metrosigns.ver_min = 34
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -136,49 +137,50 @@ metrosigns.writer.signcounts = {}
 ---------------------------------------------------------------------------------------------------
 
 -- Load settings from Minetest's main menu
-metrosigns.create_all_flag = minetest.settings:get("metrosigns_create_all") or true
+metrosigns.create_all_flag = minetest.settings:get_bool("metrosigns_create_all", true)
 
 metrosigns.create_subwayblocks_flag =
-        minetest.settings:get("metrosigns_create_subwayblocks") or false
-metrosigns.create_trainblocks_flag = minetest.settings:get("metrosigns_create_trainblocks") or false
+        minetest.settings:get_bool("metrosigns_create_subwayblocks", false)
+metrosigns.create_trainblocks_flag =
+        minetest.settings:get_bool("metrosigns_create_trainblocks", false)
 
-metrosigns.create_ext_line_flag = minetest.settings:get("metrosigns_create_ext_line") or true
+metrosigns.create_ext_line_flag = minetest.settings:get_bool("metrosigns_create_ext_line", true)
 metrosigns.ext_line_min = minetest.settings:get("metrosigns_ext_line_min") or 11
 metrosigns.ext_line_max = minetest.settings:get("metrosigns_ext_line_min") or 20
-metrosigns.ext_line_bt_cols_flag = minetest.settings:get("metrosigns_ext_line_bt_cols") or true
+metrosigns.ext_line_bt_cols_flag = minetest.settings:get_bool("metrosigns_ext_line_bt_cols", true)
 
 metrosigns.create_ext_platform_flag =
-        minetest.settings:get("metrosigns_create_ext_platform") or true
+        minetest.settings:get_bool("metrosigns_create_ext_platform", true)
 metrosigns.ext_platform_min = minetest.settings:get("metrosigns_ext_platform_min") or 11
 metrosigns.ext_platform_max = minetest.settings:get("metrosigns_ext_platform_min") or 20
 
-metrosigns.create_text_flag = minetest.settings:get("metrosigns_create_text") or true
+metrosigns.create_text_flag = minetest.settings:get_bool("metrosigns_create_text", true)
 
-metrosigns.create_athens_flag = minetest.settings:get("metrosigns_create_athens") or false
-metrosigns.create_bangkok_flag = minetest.settings:get("metrosigns_create_bangkok") or false
-metrosigns.create_berlin_flag = minetest.settings:get("metrosigns_create_berlin") or false
-metrosigns.create_bucharest_flag = minetest.settings:get("metrosigns_create_bucharest") or false
-metrosigns.create_budapest_flag = minetest.settings:get("metrosigns_create_budapest") or false
-metrosigns.create_glasgow_flag = minetest.settings:get("metrosigns_create_glasgow") or false
-metrosigns.create_hcmc_flag = minetest.settings:get("metrosigns_create_hcmc") or false
-metrosigns.create_london_flag = minetest.settings:get("metrosigns_create_london") or true
-metrosigns.create_luton_flag = minetest.settings:get("metrosigns_create_luton") or false
-metrosigns.create_madrid_flag = minetest.settings:get("metrosigns_create_madrid") or false
-metrosigns.create_moscow_flag = minetest.settings:get("metrosigns_create_moscow") or false
-metrosigns.create_newyork_flag = minetest.settings:get("metrosigns_create_newyork") or false
-metrosigns.create_paris_flag = minetest.settings:get("metrosigns_create_paris") or false
-metrosigns.create_prague_flag = minetest.settings:get("metrosigns_create_prague") or false
-metrosigns.create_rome_flag = minetest.settings:get("metrosigns_create_rome") or false
-metrosigns.create_stockholm_flag = minetest.settings:get("metrosigns_create_stockholm") or false
-metrosigns.create_taipei_flag = minetest.settings:get("metrosigns_create_taipei") or false
-metrosigns.create_tokyo_flag = minetest.settings:get("metrosigns_create_tokyo") or false
-metrosigns.create_toronto_flag = minetest.settings:get("metrosigns_create_toronto") or false
-metrosigns.create_vienna_flag = minetest.settings:get("metrosigns_create_vienna") or false
+metrosigns.create_athens_flag = minetest.settings:get_bool("metrosigns_create_athens", false)
+metrosigns.create_bangkok_flag = minetest.settings:get_bool("metrosigns_create_bangkok", false)
+metrosigns.create_berlin_flag = minetest.settings:get_bool("metrosigns_create_berlin", false)
+metrosigns.create_bucharest_flag = minetest.settings:get_bool("metrosigns_create_bucharest", false)
+metrosigns.create_budapest_flag = minetest.settings:get_bool("metrosigns_create_budapest", false)
+metrosigns.create_glasgow_flag = minetest.settings:get_bool("metrosigns_create_glasgow", false)
+metrosigns.create_hcmc_flag = minetest.settings:get_bool("metrosigns_create_hcmc", false)
+metrosigns.create_london_flag = minetest.settings:get_bool("metrosigns_create_london", true)
+metrosigns.create_luton_flag = minetest.settings:get_bool("metrosigns_create_luton", false)
+metrosigns.create_madrid_flag = minetest.settings:get_bool("metrosigns_create_madrid", false)
+metrosigns.create_moscow_flag = minetest.settings:get_bool("metrosigns_create_moscow", false)
+metrosigns.create_newyork_flag = minetest.settings:get_bool("metrosigns_create_newyork", false)
+metrosigns.create_paris_flag = minetest.settings:get_bool("metrosigns_create_paris", false)
+metrosigns.create_prague_flag = minetest.settings:get_bool("metrosigns_create_prague", false)
+metrosigns.create_rome_flag = minetest.settings:get_bool("metrosigns_create_rome", false)
+metrosigns.create_stockholm_flag = minetest.settings:get_bool("metrosigns_create_stockholm", false)
+metrosigns.create_taipei_flag = minetest.settings:get_bool("metrosigns_create_taipei", false)
+metrosigns.create_tokyo_flag = minetest.settings:get_bool("metrosigns_create_tokyo", false)
+metrosigns.create_toronto_flag = minetest.settings:get_bool("metrosigns_create_toronto", false)
+metrosigns.create_vienna_flag = minetest.settings:get_bool("metrosigns_create_vienna", false)
 
-metrosigns.create_tabyss_flag = minetest.settings:get("metrosigns_create_tabyss") or false
+metrosigns.create_tabyss_flag = minetest.settings:get_bool("metrosigns_create_tabyss", false)
 
 -- Override one or more of these settings by uncommenting the lines in this file
-dofile(metrosigns.path_mod.."/settings.lua")
+dofile(metrosigns.path_mod.."/override.lua")
 
 ---------------------------------------------------------------------------------------------------
 -- General functions
@@ -207,7 +209,7 @@ end
 
 function isint(n)
 
-  return n==math.floor(n)
+  return n == math.floor(n)
 
 end
 

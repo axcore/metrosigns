@@ -45,7 +45,7 @@ if line_flag or platform_flag then
 
             local num, col
             
-            num = (m*10) + n
+            num = (m * 10) + n
             if n == 6 then
                 col = "black"
             else
@@ -60,17 +60,17 @@ if line_flag or platform_flag then
                 if (not line_bt_cols_flag) or num < 11 then
 
                     -- Old metrosigns colour scheme
-                    tex = "metrosigns_bg_small_"..n..".png^metrosigns_char_small_"..col.."_"..m..
-                            "0.png^metrosigns_char_small_"..col.."_"..n..".png"
-                    inv = "metrosigns_bg_large_"..n..".png^metrosigns_char_large_"..
-                            col.."_"..m.."0.png^metrosigns_char_large_"..col.."_"..n..".png"
+                    tex = "metrosigns_bg_small_" .. n .. ".png^metrosigns_char_small_" .. col ..
+                            "_" .. m .. "0.png^metrosigns_char_small_" .. col .. "_" .. n .. ".png"
+                    inv = "metrosigns_bg_large_" .. n .. ".png^metrosigns_char_large_" .. col ..
+                            "_" .. m .. "0.png^metrosigns_char_large_" .. col .. "_" .. n .. ".png"
 
                 else
 
                     -- Colour scheme from basic_trains
-					local red = math.fmod(num*67+101, 255)
-					local green = math.fmod(num*97+109, 255)
-					local blue = math.fmod(num*73+127, 255)
+					local red = math.fmod((num * 67) + 101, 255)
+					local green = math.fmod((num * 97) + 109, 255)
+					local blue = math.fmod((num * 73) + 127, 255)
 
 					if red + green + blue > 512 then
                         col = "black"
@@ -80,22 +80,22 @@ if line_flag or platform_flag then
 
                     local colourise = string.format(
                         "^[colorize:#%X%X%X%X%X%X",
-                        math.floor(red/16), math.fmod(red, 16), math.floor(green/16),
-                        math.fmod(green, 16), math.floor(blue/16), math.fmod(blue, 16)
+                        math.floor(red / 16), math.fmod(red, 16), math.floor(green / 16),
+                        math.fmod(green, 16), math.floor(blue / 16), math.fmod(blue, 16)
                     )
                     
-                    tex = "(metrosigns_bg_small_x.png"..colourise..")"..
-                            "^metrosigns_char_small_"..col.."_"..m..
-                            "0.png^metrosigns_char_small_"..col.."_"..n..".png"
+                    tex = "(metrosigns_bg_small_x.png" .. colourise .. ")" .. 
+                            "^metrosigns_char_small_" .. col .. "_" .. m .. 
+                            "0.png^metrosigns_char_small_" .. col .. "_" .. n .. ".png"
                             
-                    inv = "(metrosigns_bg_large_x.png"..colourise..")"..
-                            "^metrosigns_char_large_"..col.."_"..m..
-                            "0.png^metrosigns_char_large_"..col.."_"..n..".png"
+                    inv = "(metrosigns_bg_large_x.png" .. colourise .. ")" .. 
+                            "^metrosigns_char_large_" .. col .. "_" .. m .. 
+                            "0.png^metrosigns_char_large_" .. col .. "_" .. n .. ".png"
                     
                 end
 
-                minetest.register_node("metrosigns:sign_line_"..m..n, {
-                    description = "Line "..num.." sign",
+                minetest.register_node("metrosigns:sign_line_" .. m .. n, {
+                    description = "Line " .. num .. " sign",
                     tiles = {tex},
                     groups = {
                         attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3
@@ -110,7 +110,7 @@ if line_flag or platform_flag then
                         type = "wallmounted",
                         wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
                         wall_bottom = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
-                        wall_side = {-8/16, -4/16, -5/16, -7/16, 4/16, 5/16}
+                        wall_side = {-8/16, -4/16, -5/16, -7/16, 4/16, 5/16},
                     },
                     paramtype = "light",
                     paramtype2 = "wallmounted",
@@ -120,25 +120,25 @@ if line_flag or platform_flag then
                     walkable = false
                 })
                 metrosigns.register_sign(
-                    line_category, "metrosigns:sign_line_"..m..n, metrosigns.writer.sign_units
+                    line_category, "metrosigns:sign_line_" .. m .. n, metrosigns.writer.sign_units
                 )
 
             end
 
             if num >= platform_min and num <= platform_max then
 
-                minetest.register_node("metrosigns:sign_platform_"..m..n, {
-                    description = "Platform "..num.." sign",
+                minetest.register_node("metrosigns:sign_platform_" .. m .. n, {
+                    description = "Platform " .. num .. " sign",
                     tiles = {
-                        "metrosigns_bg_small_platform.png^metrosigns_char_small_white_"..m..
-                                "0.png^metrosigns_char_small_white_"..n..".png"
+                        "metrosigns_bg_small_platform.png^metrosigns_char_small_white_" .. m .. 
+                                "0.png^metrosigns_char_small_white_" .. n .. ".png"
                     },
                     groups = {cracky = 3},
 
                     drawtype = "nodebox",
                     inventory_image
-                            = "metrosigns_bg_large_platform.png^metrosigns_char_large_white_"..m..
-                            "0.png^metrosigns_char_large_white_"..n..".png",
+                            = "metrosigns_bg_large_platform.png^metrosigns_char_large_white_" ..
+                            m .. "0.png^metrosigns_char_large_white_" .. n .. ".png",
                     is_ground_content = false,
                     legacy_wallmounted = true,
                     light_source = 5,
@@ -146,7 +146,7 @@ if line_flag or platform_flag then
                         type = "wallmounted",
                         wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
                         wall_bottom = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
-                        wall_side = {-8/16, -4/16, -5/16, -7/16, 4/16, 5/16}
+                        wall_side = {-8/16, -4/16, -5/16, -7/16, 4/16, 5/16},
                     },
                     node_box = {
                         type = "fixed",
@@ -162,7 +162,7 @@ if line_flag or platform_flag then
                 })
                 metrosigns.register_sign(
                     platform_category,
-                    "metrosigns:sign_platform_"..m..n,
+                    "metrosigns:sign_platform_" .. m .. n,
                     metrosigns.writer.sign_units
                 )
 

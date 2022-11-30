@@ -38,7 +38,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -65,7 +65,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -94,7 +94,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -141,7 +141,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -170,7 +170,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -217,7 +217,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -246,7 +246,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         node_box = {
             type = "fixed",
             fixed = {
-                { -8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
+                {-8/16, -5/16, 6/16,  8/16,  5/16, 8/16},
             },
         },
         paramtype = "light",
@@ -305,7 +305,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
             node_box = {
                 type = "fixed",
                 fixed = {
-                    { -4/16, -4/16, 6/16,  4/16,  4/16, 8/16},
+                    {-4/16, -4/16, 6/16,  4/16,  4/16, 8/16},
                 },
             },
             paramtype = "light",
@@ -317,4 +317,5 @@ if not HAVE_TRAINBLOCKS_FLAG and
         )
 
     end
+    
 end

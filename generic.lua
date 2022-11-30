@@ -17,21 +17,21 @@ function add_lightbox(city, city_descrip)
     --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
     --          one of the categories specified by metrosigns.writer.categories
 
-    minetest.register_node("metrosigns:box_"..city, {
-        description = city_descrip.." lightbox",
+    minetest.register_node("metrosigns:box_" .. city, {
+        description = city_descrip .. " lightbox",
         tiles = {
-            "metrosigns_box_"..city.."_top.png",
-            "metrosigns_box_"..city.."_top.png",
-            "metrosigns_box_"..city.."_side.png",
-            "metrosigns_box_"..city.."_side.png",
-            "metrosigns_box_"..city.."_side.png",
-            "metrosigns_box_"..city.."_side.png",
+            "metrosigns_box_" .. city .. "_top.png",
+            "metrosigns_box_" .. city .. "_top.png",
+            "metrosigns_box_" .. city .. "_side.png",
+            "metrosigns_box_" .. city .. "_side.png",
+            "metrosigns_box_" .. city .. "_side.png",
+            "metrosigns_box_" .. city .. "_side.png",
         },
         groups = box_groups,
 
         light_source = box_light_source,
     })
-    metrosigns.register_sign(city_descrip, "metrosigns:box_"..city, metrosigns.writer.box_units)
+    metrosigns.register_sign(city_descrip, "metrosigns:box_" .. city, metrosigns.writer.box_units)
 
 end
 
@@ -53,19 +53,19 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
     --          height (0)
 
     local cap_city = capitalise(city)
-    local node = "metrosigns:sign_"..city.."_line_"..line
+    local node = "metrosigns:sign_" .. city .. "_line_" .. line
 
     -- Convert (e.g.) 1 pixel to the node box equivalent, 1/16
     extra_width = (4 + extra_width) / 16
     extra_height = (4 + extra_height) / 16
 
     minetest.register_node(node, {
-        description = cap_city.." Line "..line_descrip.." sign",
-        tiles = {"metrosigns_sign_"..city.."_line_"..line..".png"},
+        description = cap_city .. " Line " .. line_descrip .. " sign",
+        tiles = {"metrosigns_sign_" .. city .. "_line_" .. line .. ".png"},
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
 
         drawtype = "nodebox",
-        inventory_image = "metrosigns_sign_"..city.."_line_"..line.."_inv.png",
+        inventory_image = "metrosigns_sign_" .. city .. "_line_" .. line .. "_inv.png",
         is_ground_content = false,
         legacy_wallmounted = true,
         light_source = 12,
@@ -74,8 +74,8 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
             wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
             wall_bottom = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
             wall_side = {
-                -8/16, (extra_height)*(-1), (extra_width)*(-1), -7/16, extra_height, extra_width
-            }
+                -8/16, (extra_height * -1), (extra_width * -1), -7/16, extra_height, extra_width,
+            },
         },
         paramtype = "light",
         paramtype2 = "wallmounted",
@@ -103,15 +103,15 @@ function add_sign_special(city, city_descrip, route, route_descrip)
     --          should be capitalised, e.g. "1", "A1", "Bakerloo Line"
 
     local cap_city = capitalise(city)
-    local node = "metrosigns:sign_"..city.."_route_"..route
+    local node = "metrosigns:sign_" .. city .. "_route_" .. route
 
     minetest.register_node(node, {
-        description = cap_city.." Route "..route_descrip.." sign",
-        tiles = {"metrosigns_sign_"..city.."_route_"..route..".png"},
+        description = cap_city .. " Route " .. route_descrip .. " sign",
+        tiles = {"metrosigns_sign_" .. city .. "_route_" .. route .. ".png"},
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
 
         drawtype = "nodebox",
-        inventory_image = "metrosigns_sign_"..city.."_route_"..route.."_inv.png",
+        inventory_image = "metrosigns_sign_" .. city .. "_route_" .. route .. "_inv.png",
         is_ground_content = false,
         legacy_wallmounted = true,
         light_source = 12,
@@ -119,7 +119,7 @@ function add_sign_special(city, city_descrip, route, route_descrip)
             type = "wallmounted",
             wall_top = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
             wall_bottom = {-8/16, -4/16, -4/16, -7/16, 4/16, 4/16},
-            wall_side = {-8/16, -7/16, -7/16, -7/16, 7/16, 7/16}
+            wall_side = {-8/16, -7/16, -7/16, -7/16, 7/16, 7/16},
         },
         paramtype = "light",
         paramtype2 = "wallmounted",
@@ -167,24 +167,24 @@ function add_map_unit(
     cap_city = capitalise(city)
     if terminus == "" then
 
-        node = "metrosigns:map_"..city.."_"..line.."_"..unit
-        description = cap_city.." "..line_descrip.. " "..unit_descrip.." sign"
-        img = "metrosigns_map_"..city.."_"..line.."_"..unit..".png"
+        node = "metrosigns:map_" .. city .. "_" .. line .. "_" .. unit
+        description = cap_city .. " " .. line_descrip ..  " " .. unit_descrip .. " sign"
+        img = "metrosigns_map_" .. city .. "_" .. line .. "_" .. unit .. ".png"
 
     else
 
-        node = "metrosigns:map_"..city.."_"..line.."_"..unit.."_"..terminus
-        description = cap_city.." "..line_descrip.. " "..unit_descrip.." sign ("..
-                terminus_descrip..")"
-        img = "metrosigns_map_"..city.."_"..line.."_"..unit..".png^metrosigns_map_"..city.."_"..
-                terminus..".png"
+        node = "metrosigns:map_" .. city .. "_" .. line .. "_" .. unit .. "_" .. terminus
+        description = cap_city .. " " .. line_descrip ..  " " .. unit_descrip .. " sign (" .. 
+                terminus_descrip .. ")"
+        img = "metrosigns_map_" .. city .. "_" .. line .. "_" .. unit .. ".png^metrosigns_map_" ..
+                city .. "_" .. terminus .. ".png"
 
     end
 
     minetest.register_node(node, {
         description = description,
         -- Reverse the back image, so map signs can be viewed from the front or back
-        tiles = {img, img, img, img, img.."^[transform4", img},
+        tiles = {img, img, img, img, img .. "^[transform4", img},
         groups = {cracky = 3},
 
         drawtype = "nodebox",

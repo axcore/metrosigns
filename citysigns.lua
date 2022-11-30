@@ -309,13 +309,14 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
 
         for unit, unit_descrip in pairs(special_table) do
 
-            local node = "metrosigns:map_london_"..line.."_"..unit
-            local img = "metrosigns_map_london_"..line.."_line.png^metrosigns_map_london_"
-                ..unit..".png"
+            local node = "metrosigns:map_london_" .. line .. "_" .. unit
+            local img = "metrosigns_map_london_" .. line .. "_line.png^metrosigns_map_london_" ..
+                    unit .. ".png"
 
             minetest.register_node(node, {
-                description = city_descrip.." "..line_descrip.." "..unit_descrip.." sign",
-                tiles = {img, img, img, img, img.."^[transform4", img},
+                description = city_descrip .. " " .. line_descrip .. " " .. unit_descrip ..
+                        " sign",
+                tiles = {img, img, img, img, img .. "^[transform4", img},
                 groups = {cracky = 3},
 
                 drawtype = "nodebox",
@@ -326,7 +327,7 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
                 node_box = {
                     type = "fixed",
                     fixed = {
-                        { -8/16, -8/16, 6/16,  8/16,  8/16, 8/16},
+                        {-8/16, -8/16, 6/16,  8/16,  8/16, 8/16},
                     },
                 },
                 paramtype = "light",
@@ -676,8 +677,8 @@ if metrosigns.create_all_flag or metrosigns.create_prague_flag then
             if line ~= line2 then
 
                 add_map_unit(
-                    city, city_descrip, line, cap_line, line2.."station", "Interchange "
-                        ..cap_line.."-"..cap_line2, "", ""
+                    city, city_descrip, line, cap_line, line2 .. "station", "Interchange " ..
+                            cap_line .. "-" .. cap_line2, "", ""
                 )
 
             end
@@ -781,13 +782,15 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
 
         for side, side_descrip in pairs(side_table) do
 
-            local node = "metrosigns:map_"..city.."_"..route.."_station_term"..side
-            local img = "metrosigns_map_"..city.."_"..colour.."_line.png^metrosigns_sign_"..city
-                .."_route_"..route..".png^metrosigns_map_"..city.."_term"..side..".png"
+            local node = "metrosigns:map_" .. city .. "_" .. route .. "_station_term" .. side
+            local img = "metrosigns_map_" .. city .. "_" .. colour ..
+                    "_line.png^metrosigns_sign_" .. city .. "_route_" .. route ..
+                    ".png^metrosigns_map_" .. city .. "_term" .. side .. ".png"
 
             minetest.register_node(node, {
-                description = cap_city.." "..route.. " station sign ("..side_descrip.." terminus)",
-                tiles = {img, img, img, img, img.."^[transform4", img},
+                description = cap_city .. " " .. route ..  " station sign (" .. side_descrip ..
+                        " terminus)",
+                tiles = {img, img, img, img, img .. "^[transform4", img},
                 groups = {cracky = 3},
 
                 drawtype = "nodebox",
@@ -798,7 +801,7 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
                 node_box = {
                     type = "fixed",
                     fixed = {
-                        { -8/16, -8/16, 6/16,  8/16,  8/16, 8/16},
+                        {-8/16, -8/16, 6/16,  8/16,  8/16, 8/16},
                     },
                 },
                 paramtype = "light",
