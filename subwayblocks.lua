@@ -104,14 +104,14 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
         
         -- (Put signs in the right order in unified_inventory, etc)
         if i < 10 then
-            num = "0"..i
+            num = "0" .. i
         else
             num = i
         end
 
         minetest.register_node("metrosigns:sb_sign_line_"..num, {
-            description = "Line "..i.." sign (subwayblocks)",
-            tiles = {"advtrains_subwayblocks_sign_line_"..i..".png"},
+            description = "Line " .. i .. " sign (subwayblocks)",
+            tiles = {"advtrains_subwayblocks_sign_line_" .. i .. ".png"},
             groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
 
             drawtype = "nodebox",

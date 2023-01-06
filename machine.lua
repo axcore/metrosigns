@@ -54,7 +54,7 @@ function metrosigns.writer.nom(pos, amount)
 
     -- Called by on_metadata_inventory_take()
     -- When the player takes an item from the sign-writing machine's inventory into their own
-    --      inventory, hence 'writing' a sign, reduce the amount of available ink/plastic
+    --      inventory, hence "writing" a sign, reduce the amount of available ink/plastic
     --      accordingly
     --
     -- Args:
@@ -489,7 +489,7 @@ end
 
 function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
 
-    -- This function fixes two issues in the original 'roads' mod
+    -- This function fixes two issues in the original "roads" mod
     -- Firstly, the previous/next buttons did not work (fixed by checking them before checking the
     --      dropdown box)
     -- Secondly, when the user switched categories, the first page was not made visible
@@ -547,26 +547,20 @@ end
 -- Register crafts for the machine and its ink cartridges
 ---------------------------------------------------------------------------------------------------
 
-minetest.register_tool("metrosigns:cartridge_red",
-    {
-        description = "Red Ink Cartridge",
-        inventory_image = "streets_cartridge_red.png"
-    }
-)
+minetest.register_tool("metrosigns:cartridge_red", {
+    description = "Red Ink Cartridge",
+    inventory_image = "streets_cartridge_red.png"
+})
 
-minetest.register_tool("metrosigns:cartridge_green",
-    {
-        description = "Green Ink Cartridge",
-        inventory_image = "streets_cartridge_green.png"
-    }
-)
+minetest.register_tool("metrosigns:cartridge_green", {
+    description = "Green Ink Cartridge",
+    inventory_image = "streets_cartridge_green.png"
+})
 
-minetest.register_tool("metrosigns:cartridge_blue",
-    {
-        description = "Blue Ink Cartridge",
-        inventory_image = "streets_cartridge_blue.png"
-    }
-)
+minetest.register_tool("metrosigns:cartridge_blue", {
+    description = "Blue Ink Cartridge",
+    inventory_image = "streets_cartridge_blue.png"
+})
 
 if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
 

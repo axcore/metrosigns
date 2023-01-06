@@ -24,7 +24,8 @@
 -- Includes various fixes/additions by Guill4um
 ---------------------------------------------------------------------------------------------------
 -- Do you want to add signs for a a new city/server? This is how to do it:
---  1. Add a new flag in the 'Load Settings' section below, e.g.
+--
+--  1. Add a new flag in the "Load Settings" section below, e.g.
 --          metrosigns.create_barcelona_flag
 --  2. Edit settingtypes.txt to add the same flag there
 --  3. Edit settings.lua to add the same flag there
@@ -33,6 +34,7 @@
 --  6. If a city's name contains more than one word (e.g. "San Francisco", you'll need to edit the
 --          capitalise() function below
 --  7. That's it!
+--
 -- If you're not sure what to do, the authors will be happy to help!
 ---------------------------------------------------------------------------------------------------
 
@@ -44,7 +46,7 @@ metrosigns = {}
 
 metrosigns.name = "metrosigns"
 metrosigns.ver_max = 1
-metrosigns.ver_min = 34
+metrosigns.ver_min = 36
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -245,7 +247,7 @@ function metrosigns.register_sign(category, node, ink_needed)
     --          metrosigns.writer.sign_units, metrosigns.writer.map_units or
     --          metrosigns.writer.text_units)
 
-    local data = {category=category, name=node, ink_needed=ink_needed}
+    local data = {category = category, name = node, ink_needed = ink_needed}
     table.insert(metrosigns.writer.signtypes[category], data)
     metrosigns.writer.signcounts[category] = metrosigns.writer.signcounts[category] + 1
 

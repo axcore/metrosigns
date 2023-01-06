@@ -32,7 +32,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
                 height = 1,
 
                 entity_fields = {
-                    size = {x = width, y = 12/16},
+                    size = {x = width, y = 12 / 16},
                     maxlines = 3,
                     color = "#000",
                 },
@@ -68,7 +68,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
                 height = 1,
 
                 entity_fields = {
-                    size = {x = width, y = 12/16},
+                    size = {x = width, y = 12 / 16},
                     maxlines = 3,
                     color = "#000",
                 },

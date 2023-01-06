@@ -19,8 +19,10 @@ if not isint(line_min) or not isint(line_max) or line_min < 0 or line_max > 99 t
 end
 
 if line_flag then
+
     line_category = "Extended line signs"
     metrosigns.register_category(line_category)
+    
 end
 
 local platform_flag, platform_min, platform_max, platform_category
@@ -33,8 +35,10 @@ if not isint(platform_min) or not isint(platform_max) or platform_min < 0 or pla
 end
 
 if platform_flag then
+
     platform_category = "Extended platform signs"
     metrosigns.register_category(platform_category)
+    
 end
 
 if line_flag or platform_flag then
@@ -136,8 +140,8 @@ if line_flag or platform_flag then
                     groups = {cracky = 3},
 
                     drawtype = "nodebox",
-                    inventory_image
-                            = "metrosigns_bg_large_platform.png^metrosigns_char_large_white_" ..
+                    inventory_image =
+                            "metrosigns_bg_large_platform.png^metrosigns_char_large_white_" ..
                             m .. "0.png^metrosigns_char_large_white_" .. n .. ".png",
                     is_ground_content = false,
                     legacy_wallmounted = true,

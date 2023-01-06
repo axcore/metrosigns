@@ -332,7 +332,7 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
                 },
                 paramtype = "light",
                 paramtype2 = "facedir",
-                walkable = false
+                walkable = false,
             })
             metrosigns.register_sign(city_descrip, node, metrosigns.writer.map_units)
 
