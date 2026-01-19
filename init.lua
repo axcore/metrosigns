@@ -45,8 +45,8 @@
 metrosigns = {}
 
 metrosigns.name = "metrosigns"
-metrosigns.ver_max = 1
-metrosigns.ver_min = 36
+metrosigns.ver_max = 2
+metrosigns.ver_min = 0
 metrosigns.ver_rev = 0
 
 metrosigns.writer = {}
@@ -96,6 +96,8 @@ end
 metrosigns.writer.cartridge_max = 60000
 -- Amount of ink used for one unit
 metrosigns.writer.cartridge_min = 1000
+-- Amount of dye required for cartridge refills
+metrosigns.writer.ink_refill = 1
 -- Number of units used for printing various kinds of sign
 -- (The printing capacity of a cartridge was doubled in v1.12.0, but reduced slightly in v1.28.0)
 metrosigns.writer.box_units = 15

@@ -37,16 +37,18 @@ function metrosigns.writer.check_supplies(pos)
         return false
     end
 
-    local redcart_good = redcart:to_table().name == "metrosigns:cartridge_red" and
+    local redcart_good_flag =
+            redcart:to_table().name == "metrosigns:cartridge_red" and
             redcart:to_table().wear < metrosigns.writer.cartridge_max
-    local greencart_good = greencart:to_table().name == "metrosigns:cartridge_green" and
+    local greencart_good_flag =
+            greencart:to_table().name == "metrosigns:cartridge_green" and
             greencart:to_table().wear < metrosigns.writer.cartridge_max
-    local bluecart_good = bluecart:to_table().name == "metrosigns:cartridge_blue" and
+    local bluecart_good_flag =
+            bluecart:to_table().name == "metrosigns:cartridge_blue" and
             bluecart:to_table().wear < metrosigns.writer.cartridge_max
-    local plastic_good = plastic:to_table().name == "basic_materials:plastic_sheet"
-    local good = redcart_good and greencart_good and bluecart_good and plastic_good
-
-    return good
+    local plastic_good_flag = plastic:to_table().name == "basic_materials:plastic_sheet"
+    
+    return redcart_good_flag and greencart_good_flag and bluecart_good_flag and plastic_good_flag
 
 end
 
@@ -89,20 +91,20 @@ function metrosigns.writer.populate_output(pos)
         return
     end
 
-    local typescount = metrosigns.writer.signcounts[metrosigns.writer.current_category]
-    local pagesize = 8 * 5
+    local types_count = metrosigns.writer.signcounts[metrosigns.writer.current_category]
+    local page_size = 8 * 5
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     local page = meta:get_int("page")
-    local maxpage = math.ceil(typescount/pagesize)
+    local maxpage = math.ceil(types_count / page_size)
     local dropdown_string = ""
     local dropdown_index = 1
 
     inv:set_list("output", {})
     -- For aesthetic reasons, I prefer that the first page is a full 8x5 grid, even if all of the
     --  slots are empty. Later pages, however, can have exactly as many slots as they need
-    if typescount > 40 then
-        inv:set_size("output", typescount)
+    if types_count > 40 then
+        inv:set_size("output", types_count)
     else
         inv:set_size("output", 40)
     end
@@ -151,7 +153,7 @@ function metrosigns.writer.populate_output(pos)
         "dropdown[1.5,5;3.75,1;category;" .. dropdown_string .. ";" .. tostring(dropdown_index) ..
                 "]" ..
         -- List of signs
-        "list[current_name;output;2.8,0;8,5;" .. tostring((page - 1) * pagesize) .. "]" ..
+        "list[current_name;output;2.8,0;8,5;" .. tostring((page - 1) * page_size) .. "]" ..
         -- Player inventory
         "list[current_player;main;1.5,6.25;8,4;]" ..
         -- (Change by Guill4um - allow printing the signs with SHIFT + click, as well as by
@@ -166,6 +168,8 @@ function metrosigns.writer.populate_output(pos)
         "label[6.75,5.25;Page " .. page .. " of " .. maxpage .. "]" ..
         -- List rings
         "listring[current_player;main]" ..
+        "listring[current_name;input]"..        
+        "listring[current_player;main]" ..
         "listring[current_name;redcart]" ..
         "listring[current_player;main]" ..
         "listring[current_name;greencart]" ..
@@ -176,13 +180,20 @@ function metrosigns.writer.populate_output(pos)
         "listring[current_player;main]" ..
         "listring[current_name;recycle]"
     )
-    meta:set_int("maxpage",maxpage)
+    meta:set_int("maxpage", maxpage)
 
 end
 
 ---------------------------------------------------------------------------------------------------
 -- Callbacks
 ---------------------------------------------------------------------------------------------------
+
+function metrosigns.writer.allow_metadata_inventory_move(
+    pos, from_list, from_index, to_list, to_index, count, player
+)
+    return 0
+
+end
 
 function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, stack, player)
 
@@ -191,7 +202,6 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     local stack_name = stack:get_name()
     local stack_count = stack:get_count()
     local player_inv = player:get_inventory()
-    local move_flag
 
     local ink_refund = 0
     local redcart = inv:get_stack("redcart", 1)
@@ -201,6 +211,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     local plastic_refund = 0
     local plastic = inv:get_stack("plastic", 1)
 
+    --[[
     -- Deal with the right node in the right slot
     if listname == "redcart" and stack_name == "metrosigns:cartridge_red" then
         return 1
@@ -211,7 +222,43 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
     elseif listname == "plastic" and stack_name == "basic_materials:plastic_sheet" then
         return stack_count
     end
+    ]]--
+    -- Deal with the right node in the right slot
+    if listname == "input" then
 
+        if stack_name == "metrosigns:cartridge_red" or
+                stack_name == "metrosigns:cartridge_green" or
+                stack_name == "metrosigns:cartridge_blue" or
+                stack_name == "basic_materials:plastic_sheet" then
+
+            return stack_count
+
+        elseif (
+            stack_name == "dye:red" and
+            redcart:get_name() == "metrosigns:cartridge_red"
+        ) or (
+            stack_name == "dye:green" and
+            greencart:get_name() == "metrosigns:cartridge_green"
+        ) or (
+            stack_name == "dye:blue" and
+            bluecart:get_name() == "metrosigns:cartridge_blue"
+        ) then
+
+            if stack:get_count() >= metrosigns.writer.ink_refill then
+                return metrosigns.writer.ink_refill
+            else
+                return 0
+            end
+
+        else
+
+            return 0
+
+        end
+
+    end
+
+    --[[
     -- (Change by Guill4um - refill cartridges by dropping the dye directly into the same inventory
     --      slots)
     if listname == "redcart" and stack_name == "dye:red" then
@@ -270,7 +317,93 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         end
 
     end
+    ]]--
+    -- Refill empty cartridges (this can also be done by shift-clicking dyes in the player's "main"
+    --      inventory)
+    if listname == "redcart" then
 
+        if stack_name == "metrosigns:cartridge_red" then
+
+            return 1
+
+        elseif stack_name == "dye:red" then
+
+            if redcart:get_name() == "metrosigns:cartridge_red" then
+
+                redcart:set_wear(0)
+                inv:set_stack("redcart", 1, redcart)
+                stack:set_count(metrosigns.writer.ink_refill)
+                player_inv:remove_item("main", stack)
+                stack:set_count(0)
+                metrosigns.writer.populate_output(pos)
+
+            end
+
+            return 0
+
+        end
+
+    elseif listname == "greencart" then
+
+        if stack_name == "metrosigns:cartridge_green" then
+
+            return 1
+
+        elseif stack_name == "dye:green" then
+
+            if greencart:get_name() == "metrosigns:cartridge_green" then
+
+                greencart:set_wear(0)
+                inv:set_stack("greencart", 1, greencart)
+                stack:set_count(metrosigns.writer.ink_refill)
+                player_inv:remove_item("main", stack)
+                stack:set_count(0)
+                metrosigns.writer.populate_output(pos)
+
+            end
+
+            return 0
+
+        end
+
+    elseif listname == "bluecart" then
+
+        if stack_name == "metrosigns:cartridge_blue" then
+
+            return 1
+
+        elseif stack_name == "dye:blue" then
+
+            if bluecart:get_name() == "metrosigns:cartridge_blue" then
+
+                bluecart:set_wear(0)
+                inv:set_stack("bluecart", 1, bluecart)
+                stack:set_count(metrosigns.writer.ink_refill)
+                player_inv:remove_item("main", stack)
+                stack:set_count(0)
+                metrosigns.writer.populate_output(pos)
+
+            end
+
+            return 0
+
+        end
+
+    elseif listname == "plastic" and stack_name == "basic_materials:plastic_sheet" then
+        return stack_count
+
+    elseif listname == "main" then
+
+        local player_inv = player:get_inventory()
+        if player_inv:room_for_item("main", stack) then
+            return stack:get_count()
+        else
+            return 0
+        end
+
+    end
+
+    --[[
     -- Cannot rely on the listring to put the right type of cartridge into the right slot; a green
     --      cartridge would be put into the red cartridge slot
     -- The workaround is to move the green cartridge into the green slot directly
@@ -302,6 +435,7 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
         end
 
     end
+    ]]--
 
     -- All metrosigns nodes (except lightboxes and the sign writer itself) can be recycled
     -- For each compatible node added to the recycling slot, the player has a 66% chance of
@@ -399,11 +533,6 @@ function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, st
 
     end
 
-    -- In this situation, the list of writeable signs is not updated automatically
-    if move_flag then
-        metrosigns.writer.populate_output(pos)
-    end
-
     -- Having put the green cartridge in the green slot, don't put the green cartridge in the red
     --  slot (etc), as well
     return 0
@@ -415,13 +544,11 @@ function metrosigns.writer.can_dig(pos)
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     
-    return (
-        inv:is_empty("redcart") and
-                inv:is_empty("greencart") and
-                inv:is_empty("bluecart") and
-                inv:is_empty("plastic") and
-                inv:is_empty("recycle")
-    )
+    return inv:is_empty("redcart") and
+            inv:is_empty("greencart") and
+            inv:is_empty("bluecart") and
+            inv:is_empty("plastic") and
+            inv:is_empty("recycle")
 
 end
 
@@ -433,6 +560,7 @@ function metrosigns.writer.on_construct(pos)
     meta:set_int("page", 1)
     meta:set_int("maxpage", 1)
 
+    inv:set_size("input", 1)
     inv:set_size("redcart", 1)
     inv:set_size("greencart", 1)
     inv:set_size("bluecart", 1)
@@ -443,8 +571,69 @@ function metrosigns.writer.on_construct(pos)
 
 end
 
-function metrosigns.writer.on_metadata_inventory_put(pos)
+function metrosigns.writer.on_metadata_inventory_put(pos, listname, index, stack)
 
+    if listname == "input" then
+
+        local meta = core.get_meta(pos)
+        local inv = meta:get_inventory()
+        local stack_name = stack:get_name()
+
+        local redcart = inv:get_stack("redcart", 1)
+        local greencart = inv:get_stack("greencart", 1)
+        local bluecart = inv:get_stack("bluecart", 1)
+
+        if stack_name == "metrosigns:cartridge_red" then
+
+            inv:add_item("redcart", stack)
+            inv:set_stack("input", 1, nil)
+
+        elseif stack_name == "metrosigns:cartridge_green" then
+
+            inv:add_item("greencart", stack)
+            inv:set_stack("input", 1, nil)
+
+        elseif stack_name == "metrosigns:cartridge_blue" then
+
+            inv:add_item("bluecart", stack)
+            inv:set_stack("input", 1, nil)
+
+        elseif stack_name == "basic_materials:plastic_sheet" then
+
+            inv:add_item("plastic", stack)
+            inv:set_stack("input", 1, nil)
+
+        elseif stack_name == "dye:red" and
+                redcart:get_name() == "metrosigns:cartridge_red" then
+
+            redcart:set_wear(0)
+            inv:set_stack("redcart", 1, redcart)
+            stack:set_count(metrosigns.writer.ink_refill)
+            inv:remove_item("input", stack)
+            stack:set_count(0)
+
+        elseif stack_name == "dye:green" and
+                greencart:get_name() == "metrosigns:cartridge_green" then
+
+            greencart:set_wear(0)
+            inv:set_stack("greencart", 1, greencart)
+            stack:set_count(metrosigns.writer.ink_refill)
+            inv:remove_item("input", stack)
+            stack:set_count(0)
+
+        elseif stack_name == "dye:blue" and
+                bluecart:get_name() == "metrosigns:cartridge_blue" then
+
+            bluecart:set_wear(0)
+            inv:set_stack("bluecart", 1, bluecart)
+            stack:set_count(metrosigns.writer.ink_refill)
+            inv:remove_item("input", stack)
+            stack:set_count(0)
+
+        end
+
+    end
+    
     metrosigns.writer.populate_output(pos)
 
 end
@@ -453,7 +642,7 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
 
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
-    local input_stack = inv:get_stack(listname,  index)
+    local incoming_stack = inv:get_stack(listname,  index)
 
     if listname == "output" then
 
@@ -464,18 +653,18 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
         -- (Change by Guill4um - when moving signs onto a slot that's not empty, the inventory item
         --      occupying that slot is erased. This fixes the problem. Credit to
         --      moreblocks:cnc code)
-        if not input_stack:is_empty() and input_stack:get_name() ~= stack:get_name() then
+        if not incoming_stack:is_empty() and incoming_stack:get_name() ~= stack:get_name() then
 
             local player_inv = player:get_inventory()
-            if player_inv:room_for_item("main", input_stack) then
+            if player_inv:room_for_item("main", incoming_stack) then
 
                 -- If there is room in the player's inventory, the item is moved
-                player_inv:add_item("main", input_stack)
+                player_inv:add_item("main", incoming_stack)
 
             else
 
                 -- if there is no room, the item is dropped
-                minetest.item_drop(input_stack, player, pos)
+                minetest.item_drop(incoming_stack, player, pos)
 
             end
 
@@ -533,13 +722,6 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
 
     -- In all cases, redraw the list of signs for the current category
     metrosigns.writer.populate_output(pos)
-
-end
-
-function metrosigns.writer.allow_metadata_inventory_move(
-    pos, from_list, from_index, to_list, to_index, count, player
-)
-    return 0
 
 end
 
