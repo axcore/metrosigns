@@ -19,7 +19,7 @@ if metrosigns.create_all_flag or metrosigns.create_tabyss_flag then
 
     add_lightbox(server, server_descrip)
     -- GS metro gets its own lightbox
-    minetest.register_node("metrosigns:box_tabyss_metro", {
+    core.register_node("metrosigns:box_tabyss_metro", {
         description = "Grapeyard Superb lightbox",
         tiles = {
             "metrosigns_box_tabyss_metro_top.png",

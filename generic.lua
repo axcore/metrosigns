@@ -17,7 +17,7 @@ function add_lightbox(city, city_descrip)
     --      city_descrip (string): The long city name, e.g. "London Underground"; should be the
     --          one of the categories specified by metrosigns.writer.categories
 
-    minetest.register_node("metrosigns:box_" .. city, {
+    core.register_node("metrosigns:box_" .. city, {
         description = city_descrip .. " lightbox",
         tiles = {
             "metrosigns_box_" .. city .. "_top.png",
@@ -59,7 +59,7 @@ function add_sign(city, city_descrip, line, line_descrip, extra_width, extra_hei
     extra_width = (4 + extra_width) / 16
     extra_height = (4 + extra_height) / 16
 
-    minetest.register_node(node, {
+    core.register_node(node, {
         description = cap_city .. " Line " .. line_descrip .. " sign",
         tiles = {"metrosigns_sign_" .. city .. "_line_" .. line .. ".png"},
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
@@ -105,7 +105,7 @@ function add_sign_special(city, city_descrip, route, route_descrip)
     local cap_city = capitalise(city)
     local node = "metrosigns:sign_" .. city .. "_route_" .. route
 
-    minetest.register_node(node, {
+    core.register_node(node, {
         description = cap_city .. " Route " .. route_descrip .. " sign",
         tiles = {"metrosigns_sign_" .. city .. "_route_" .. route .. ".png"},
         groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
@@ -181,7 +181,7 @@ function add_map_unit(
 
     end
 
-    minetest.register_node(node, {
+    core.register_node(node, {
         description = description,
         -- Reverse the back image, so map signs can be viewed from the front or back
         tiles = {img, img, img, img, img .. "^[transform4", img},

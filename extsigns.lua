@@ -8,13 +8,14 @@
 -- Extended line and platform signs
 ---------------------------------------------------------------------------------------------------
 
-local line_flag, line_min, line_max, line_bt_cols_flag, line_category
+local line_flag, line_bt_cols_flag, line_category
 
 line_flag = metrosigns.create_all_flag or metrosigns.create_ext_line_flag
-line_min = tonumber(metrosigns.ext_line_min)
-line_max = tonumber(metrosigns.ext_line_max)
 line_bt_cols_flag = metrosigns.ext_line_bt_cols_flag
-if not isint(line_min) or not isint(line_max) or line_min < 0 or line_max > 99 then
+if not isint(metrosigns.ext_line_min) or
+        not isint(metrosigns.ext_line_max) or
+        metrosigns.ext_line_min < 0 or
+        metrosigns.ext_line_max > 99 then
     line_flag = false
 end
 
@@ -25,12 +26,13 @@ if line_flag then
     
 end
 
-local platform_flag, platform_min, platform_max, platform_category
+local platform_flag, platform_category
 
 platform_flag = metrosigns.create_all_flag or metrosigns.create_ext_platform_flag
-platform_min = tonumber(metrosigns.ext_platform_min)
-platform_max = tonumber(metrosigns.ext_platform_max)
-if not isint(platform_min) or not isint(platform_max) or platform_min < 0 or platform_max > 99 then
+if not isint(metrosigns.ext_platform_min) or
+        not isint(metrosigns.ext_platform_max) or
+        metrosigns.ext_platform_min < 0 or
+        metrosigns.ext_platform_max > 99 then
     platform_flag = false
 end
 
@@ -56,7 +58,7 @@ if line_flag or platform_flag then
                 col = "white"
             end
 
-            if num >= line_min and num <= line_max then
+            if num >= metrosigns.ext_line_min and num <= metrosigns.ext_line_max then
 
                 local tex, inv
 
@@ -98,7 +100,7 @@ if line_flag or platform_flag then
                     
                 end
 
-                minetest.register_node("metrosigns:sign_line_" .. m .. n, {
+                core.register_node("metrosigns:sign_line_" .. m .. n, {
                     description = "Line " .. num .. " sign",
                     tiles = {tex},
                     groups = {
@@ -129,9 +131,9 @@ if line_flag or platform_flag then
 
             end
 
-            if num >= platform_min and num <= platform_max then
+            if num >= metrosigns.ext_platform_min and num <= metrosigns.ext_platform_max then
 
-                minetest.register_node("metrosigns:sign_platform_" .. m .. n, {
+                core.register_node("metrosigns:sign_platform_" .. m .. n, {
                     description = "Platform " .. num .. " sign",
                     tiles = {
                         "metrosigns_bg_small_platform.png^metrosigns_char_small_white_" .. m .. 

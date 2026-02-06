@@ -56,7 +56,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
             (metrosigns.writer.text_units * width)
         )
 
-        minetest.override_item("signs_road:metrosigns_text_" .. width_descrip, {light_source = 5})
+        core.override_item("signs_road:metrosigns_text_" .. width_descrip, {light_source = 5})
 
         -- "You are here sign": text on a reddish background
         signs_api.register_sign(
@@ -92,7 +92,7 @@ if HAVE_SIGNS_API_FLAG and (metrosigns.create_all_flag or metrosigns.create_text
             (metrosigns.writer.text_units * width)
         )
 
-        minetest.override_item(
+        core.override_item(
             "signs_road:metrosigns_here_" .. width_descrip,
             {light_source = 5}
         )

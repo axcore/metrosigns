@@ -18,7 +18,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
     local category = "Signs from subwayblocks mod"
     metrosigns.register_category(category)
 
-    minetest.register_node("metrosigns:sb_box_berlin", {
+    core.register_node("metrosigns:sb_box_berlin", {
         description = "Berlin U-Bahn lightbox (subwayblocks)",
         tiles = {
             "advtrains_subwayblocks_box_berlin_top.png",
@@ -34,7 +34,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_berlin", metrosigns.writer.box_units)
 
-    minetest.register_node("metrosigns:sb_box_london", {
+    core.register_node("metrosigns:sb_box_london", {
         description = "London Underground lightbox (subwayblocks)",
         tiles = {
             "advtrains_subwayblocks_box_london_top.png",
@@ -50,7 +50,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_london", metrosigns.writer.box_units)
 
-    minetest.register_node("metrosigns:sb_box_madrid", {
+    core.register_node("metrosigns:sb_box_madrid", {
         description = "Madrid Metro lightbox (subwayblocks)",
         tiles = {
             "advtrains_subwayblocks_box_madrid_top.png",
@@ -66,7 +66,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_madrid", metrosigns.writer.box_units)
 
-    minetest.register_node("metrosigns:sb_box_mountain", {
+    core.register_node("metrosigns:sb_box_mountain", {
         description = "Mountain Railway lightbox (subwayblocks)",
         tiles = {
             "advtrains_subwayblocks_box_mountain_top.png",
@@ -82,7 +82,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
     })
     metrosigns.register_sign(category, "metrosigns:sb_box_mountain", metrosigns.writer.box_units)
 
-    minetest.register_node("metrosigns:sb_box_paris", {
+    core.register_node("metrosigns:sb_box_paris", {
         description = "Paris Metro lightbox (subwayblocks)",
         tiles = {
             "advtrains_subwayblocks_box_paris_top.png",
@@ -109,7 +109,7 @@ if not HAVE_SUBWAYBLOCKS_FLAG and
             num = i
         end
 
-        minetest.register_node("metrosigns:sb_sign_line_"..num, {
+        core.register_node("metrosigns:sb_sign_line_"..num, {
             description = "Line " .. i .. " sign (subwayblocks)",
             tiles = {"advtrains_subwayblocks_sign_line_" .. i .. ".png"},
             groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},

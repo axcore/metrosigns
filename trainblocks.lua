@@ -19,7 +19,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
     local category = "Signs from trainblocks mod"
     metrosigns.register_category(category)
 
-    minetest.register_node("metrosigns:tb_sign_station", {
+    core.register_node("metrosigns:tb_sign_station", {
         description = "Station sign (trainblocks)",
         tiles = {
             "trainblocks_sign_station_blank.png",
@@ -46,7 +46,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
     })
     metrosigns.register_sign(category, "metrosigns:tb_sign_station", metrosigns.writer.sign_units)
 
-    minetest.register_node("metrosigns:tb_sign_station_exit_left", {
+    core.register_node("metrosigns:tb_sign_station_exit_left", {
         description = "Station left exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_station_blank.png",
@@ -75,7 +75,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_sign_station_exit_left", metrosigns.writer.sign_units
     )
 
-    minetest.register_node("metrosigns:tb_sign_station_exit_right", {
+    core.register_node("metrosigns:tb_sign_station_exit_right", {
         description = "Station right exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_station_blank.png",
@@ -104,7 +104,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_sign_station_exit_right", metrosigns.writer.sign_units
     )
 
-    minetest.register_node("metrosigns:tb_box_berlin_ubahn", {
+    core.register_node("metrosigns:tb_box_berlin_ubahn", {
         description = "Berlin U-Bahn lightbox (trainblocks)",
         tiles = {
             "trainblocks_box_berlin_ubahn_top.png",
@@ -122,7 +122,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_box_berlin_ubahn", metrosigns.writer.box_units
     )
 
-    minetest.register_node("metrosigns:tb_sign_berlin_ubahn_exit_left", {
+    core.register_node("metrosigns:tb_sign_berlin_ubahn_exit_left", {
         description = "Berlin U-Bahn left exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_berlin_ubahn_exit_blank.png",
@@ -151,7 +151,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_sign_berlin_ubahn_exit_left", metrosigns.writer.sign_units
     )
 
-    minetest.register_node("metrosigns:tb_sign_berlin_ubahn_exit_right", {
+    core.register_node("metrosigns:tb_sign_berlin_ubahn_exit_right", {
         description = "Berlin U-Bahn right exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_berlin_ubahn_exit_blank.png",
@@ -180,7 +180,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_sign_berlin_ubahn_exit_right", metrosigns.writer.sign_units
     )
 
-    minetest.register_node("metrosigns:tb_box_berlin_sbahn", {
+    core.register_node("metrosigns:tb_box_berlin_sbahn", {
         description = "Berlin S-Bahn lightbox (trainblocks)",
         tiles = {
             "trainblocks_box_berlin_sbahn_top.png",
@@ -198,7 +198,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_box_berlin_sbahn", metrosigns.writer.box_units
     )
 
-    minetest.register_node("metrosigns:tb_sign_berlin_sbahn_exit_left", {
+    core.register_node("metrosigns:tb_sign_berlin_sbahn_exit_left", {
         description = "Berlin S-Bahn left exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_berlin_sbahn_exit_blank.png",
@@ -227,7 +227,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
         category, "metrosigns:tb_sign_berlin_sbahn_exit_left", metrosigns.writer.sign_units
     )
 
-    minetest.register_node("metrosigns:tb_sign_berlin_sbahn_exit_right", {
+    core.register_node("metrosigns:tb_sign_berlin_sbahn_exit_right", {
         description = "Berlin S-Bahn right exit sign (trainblocks)",
         tiles = {
             "trainblocks_sign_berlin_sbahn_exit_blank.png",
@@ -267,7 +267,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
             num = i
         end
 
-        minetest.register_node("metrosigns:tb_sign_line_"..num, {
+        core.register_node("metrosigns:tb_sign_line_"..num, {
             description = "Line "..i.." sign (trainblocks)",
             tiles = {"trainblocks_sign_line_"..i..".png"},
             groups = {attached_node = 1, choppy = 2, flammable = 2, oddly_breakable_by_hand = 3},
@@ -292,7 +292,7 @@ if not HAVE_TRAINBLOCKS_FLAG and
             category, "metrosigns:tb_sign_line_"..num, metrosigns.writer.sign_units
         )
 
-        minetest.register_node("metrosigns:tb_sign_platform_"..num, {
+        core.register_node("metrosigns:tb_sign_platform_"..num, {
             description = "Platform "..i.." sign (trainblocks)",
             tiles = {"trainblocks_sign_platform_"..i..".png"},
             groups = {cracky = 3},

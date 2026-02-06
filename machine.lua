@@ -23,7 +23,7 @@ function metrosigns.writer.check_supplies(pos)
     -- Return values:
     --  Returns true if signs can be displayed, false if they can't be displayed
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local redcart = inv:get_stack("redcart", 1)
     local greencart = inv:get_stack("greencart", 1)
@@ -62,7 +62,7 @@ function metrosigns.writer.nom(pos, amount)
     -- Args:
     --      amount (int): The amount of ink needed to write the sign
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local redcart = inv:get_stack("redcart", 1)
     local greencart = inv:get_stack("greencart", 1)
@@ -93,7 +93,7 @@ function metrosigns.writer.populate_output(pos)
 
     local types_count = metrosigns.writer.signcounts[metrosigns.writer.current_category]
     local page_size = 8 * 5
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local page = meta:get_int("page")
     local maxpage = math.ceil(types_count / page_size)
@@ -197,7 +197,7 @@ end
 
 function metrosigns.writer.allow_metadata_inventory_put(pos, listname, index, stack, player)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local stack_name = stack:get_name()
     local stack_count = stack:get_count()
@@ -541,7 +541,7 @@ end
 
 function metrosigns.writer.can_dig(pos)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     
     return inv:is_empty("redcart") and
@@ -554,7 +554,7 @@ end
 
 function metrosigns.writer.on_construct(pos)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
 
     meta:set_int("page", 1)
@@ -640,7 +640,7 @@ end
 
 function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stack, player)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local inv = meta:get_inventory()
     local incoming_stack = inv:get_stack(listname,  index)
 
@@ -664,7 +664,7 @@ function metrosigns.writer.on_metadata_inventory_take(pos, listname, index, stac
             else
 
                 -- if there is no room, the item is dropped
-                minetest.item_drop(incoming_stack, player, pos)
+                core.item_drop(incoming_stack, player, pos)
 
             end
 
@@ -684,7 +684,7 @@ function metrosigns.writer.on_receive_fields(pos, formname, fields, sender)
     -- Secondly, when the user switched categories, the first page was not made visible
     --      automatically (very confusing if the new category has only one page)
 
-    local meta = minetest.get_meta(pos)
+    local meta = core.get_meta(pos)
     local page = meta:get_int("page")
     local maxpage = meta:get_int("maxpage")
 
@@ -729,17 +729,17 @@ end
 -- Register crafts for the machine and its ink cartridges
 ---------------------------------------------------------------------------------------------------
 
-minetest.register_tool("metrosigns:cartridge_red", {
+core.register_tool("metrosigns:cartridge_red", {
     description = "Red Ink Cartridge",
     inventory_image = "streets_cartridge_red.png"
 })
 
-minetest.register_tool("metrosigns:cartridge_green", {
+core.register_tool("metrosigns:cartridge_green", {
     description = "Green Ink Cartridge",
     inventory_image = "streets_cartridge_green.png"
 })
 
-minetest.register_tool("metrosigns:cartridge_blue", {
+core.register_tool("metrosigns:cartridge_blue", {
     description = "Blue Ink Cartridge",
     inventory_image = "streets_cartridge_blue.png"
 })
@@ -748,7 +748,7 @@ if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
 
     local sheeting = "basic_materials:plastic_sheet"
 
-    minetest.register_craft({
+    core.register_craft({
         output = "metrosigns:cartridge_red",
         recipe = {
             {sheeting, sheeting, sheeting},
@@ -757,7 +757,7 @@ if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
         }
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "metrosigns:cartridge_green",
         recipe = {
             {sheeting, sheeting, sheeting},
@@ -766,7 +766,7 @@ if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
         }
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "metrosigns:cartridge_blue",
         recipe = {
             {sheeting, sheeting, sheeting},
@@ -776,25 +776,25 @@ if HAVE_DEFAULT_FLAG and HAVE_BASIC_MATERIALS_FLAG then
     })
 
     -- Refills
-    minetest.register_craft({
+    core.register_craft({
         type = "shapeless",
         output = "metrosigns:cartridge_red",
         recipe = {"metrosigns:cartridge_red", "dye:red"}
     })
 
-    minetest.register_craft({
+    core.register_craft({
         type = "shapeless",
         output = "metrosigns:cartridge_green",
         recipe = {"metrosigns:cartridge_green", "dye:green"}
     })
 
-    minetest.register_craft({
+    core.register_craft({
         type = "shapeless",
         output = "metrosigns:cartridge_blue",
         recipe = {"metrosigns:cartridge_blue", "dye:blue"}
     })
 
-    minetest.register_craft({
+    core.register_craft({
         output = "metrosigns:sign_writer",
         recipe = {
             {sheeting, "default:steel_ingot", sheeting},
@@ -809,7 +809,7 @@ end
 -- Register the sign-writing machine itself
 ---------------------------------------------------------------------------------------------------
 
-minetest.register_node("metrosigns:sign_writer", {
+core.register_node("metrosigns:sign_writer", {
     description = "Sign Writer Machine",
     tiles = {
         "metrosigns_writer_top.png",
@@ -837,7 +837,7 @@ minetest.register_node("metrosigns:sign_writer", {
 
 if HAVE_DEFAULT_FLAG then
 
-    minetest.override_item(
+    core.override_item(
         "metrosigns:sign_writer", { sounds = default.node_sound_stone_defaults() }
     )
 

@@ -313,7 +313,7 @@ if metrosigns.create_all_flag or metrosigns.create_london_flag then
             local img = "metrosigns_map_london_" .. line .. "_line.png^metrosigns_map_london_" ..
                     unit .. ".png"
 
-            minetest.register_node(node, {
+            core.register_node(node, {
                 description = city_descrip .. " " .. line_descrip .. " " .. unit_descrip ..
                         " sign",
                 tiles = {img, img, img, img, img .. "^[transform4", img},
@@ -787,7 +787,7 @@ if metrosigns.create_all_flag or metrosigns.create_stockholm_flag then
                     "_line.png^metrosigns_sign_" .. city .. "_route_" .. route ..
                     ".png^metrosigns_map_" .. city .. "_term" .. side .. ".png"
 
-            minetest.register_node(node, {
+            core.register_node(node, {
                 description = cap_city .. " " .. route ..  " station sign (" .. side_descrip ..
                         " terminus)",
                 tiles = {img, img, img, img, img .. "^[transform4", img},
